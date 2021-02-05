@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; 
 
 function Restaurants(){
   return(
@@ -11,7 +12,7 @@ function Restaurants(){
             <div className="card-body">
               <div className="d-flex justify-content-between align-items-center">
                 <h5 className="card-title">Company Name</h5>
-                <button className="btn btn-primary">View</button>
+                <Link className="btn btn-primary" to="/restaurant">View</Link>
               </div>
               <p>City</p>
               <img className="card-img-top" src="images/restaurant.png" alt="Card image cap" />

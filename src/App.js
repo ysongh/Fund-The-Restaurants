@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route  } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route  } from 'react-router-dom';
 import Web3 from 'web3';
 
 import './App.css';
 import Restaurants from './components/Restaurants';
+import Restaurant from './components/Restaurant';
 
 class App extends Component{
   async componentWillMount(){
@@ -27,9 +28,14 @@ class App extends Component{
   render(){
     return (
       <Router className="App">
-        <Route path="/">
-          <Restaurants />
-        </Route>
+        <Switch>
+          <Route path="/restaurant">
+            <Restaurant />
+          </Route>
+          <Route path="/">
+            <Restaurants />
+          </Route>
+        </Switch>
       </Router>
     );
   }
