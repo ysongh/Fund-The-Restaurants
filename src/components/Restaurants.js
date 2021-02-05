@@ -5,6 +5,7 @@ function Restaurants(){
   return(
     <div className="container">
       <h1>List of Restaurants</h1>
+      <Link className="btn btn-primary" to="/add-restaurant">Add Restaurant</Link>
 
       <div className="row">
         <div className="col-12 col-md-6 col-lg-4">

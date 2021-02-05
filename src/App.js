@@ -6,6 +6,7 @@ import './App.css';
 import RestaurantsBlockchain from './abis/Restaurants.json';
 import Restaurants from './components/Restaurants';
 import Restaurant from './components/Restaurant';
+import AddRestaurant from './components/AddRestaurant';
 
 class App extends Component{
   state = {
@@ -58,6 +59,9 @@ class App extends Component{
         <Switch>
           <Route path="/restaurant">
             <Restaurant />
+          </Route>
+          <Route path="/add-restaurant">
+            <AddRestaurant />
           </Route>
           <Route path="/">
             <Restaurants />
