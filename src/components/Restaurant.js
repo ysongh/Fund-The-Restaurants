@@ -12,6 +12,7 @@ function Restaurant(){
               <img className="card-img-top mb-3" src="images/restaurant.png" alt="Card image cap" />
               <h5 className="card-title">Company Name</h5>
               <p>City</p>
+              <p>This is a good restaurant</p>
               <button className="btn btn-primary btn-block">Donate</button>
             </div>
           </div>
