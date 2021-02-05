@@ -11,12 +11,15 @@ import AddRestaurant from './components/AddRestaurant';
 class App extends Component{
   state = {
     account: '',
-    restaurantsBlockchain: null
+    restaurantCount: 0,
+    restaurantsBlockchain: null,
+    restaurants: []
   }
 
   async componentWillMount(){
     await this.loadWeb3();
     await this.loadBlockchainData();
+    await this.getRestaurant();
   }
 
   async loadBlockchainData(){
@@ -34,6 +37,9 @@ class App extends Component{
 
       const restaurantsBlockchain = new web3.eth.Contract(abi, address);
       this.setState({ restaurantsBlockchain });
+
+      const restaurantCount = await restaurantsBlockchain.methods.restaurantCount().call();
+      this.setState({ restaurantCount });
     }else{
       window.alert('Contract is not deployed to detected network')
     }
@@ -53,6 +59,13 @@ class App extends Component{
     }
   }
 
+  async getRestaurant(){
+    for(let i = 0; i < this.state.restaurantCount; i++){
+      const restaurant = await this.state.restaurantsBlockchain.methods.restaurants(i + 1).call();
+      this.setState({ restaurants: [...this.state.restaurants, restaurant] });
+    }
+  }
+
   async createRestaurant(name, location, imageURL, description, amount){
     await this.state.restaurantsBlockchain.methods.createRestaurant(name, description, location, imageURL, amount).send({ from: this.state.account });
   }
@@ -61,14 +74,14 @@ class App extends Component{
     return (
       <Router className="App">
         <Switch>
-          <Route path="/restaurant">
-            <Restaurant />
-          </Route>
           <Route path="/add-restaurant">
             <AddRestaurant createRestaurant={this.createRestaurant.bind(this)}/>
           </Route>
+          <Route path="/restaurant/:id">
+            <Restaurant restaurants={this.state.restaurants} />
+          </Route>
           <Route path="/">
-            <Restaurants />
+            <Restaurants restaurants={this.state.restaurants} />
           </Route>
         </Switch>
       </Router>

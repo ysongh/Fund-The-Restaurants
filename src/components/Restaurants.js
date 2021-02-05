@@ -1,40 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; 
 
-function Restaurants(){
+function Restaurants({ restaurants }){
   return(
     <div className="container">
       <h1>List of Restaurants</h1>
       <Link className="btn btn-primary" to="/add-restaurant">Add Restaurant</Link>
 
       <div className="row">
-        <div className="col-12 col-md-6 col-lg-4">
-          <div className="card">
-            <div className="card-body">
-              <div className="d-flex justify-content-between align-items-center">
-                <h5 className="card-title">Company Name</h5>
-                <Link className="btn btn-primary" to="/restaurant">View</Link>
+        {restaurants.map(restaurant => {
+          return(
+            <div className="col-12 col-md-6 col-lg-4 mb-3" key={restaurant.restaurantId}>
+              <div className="card">
+                <div className="card-body">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <h5 className="card-title">{restaurant.name}</h5>
+                    <Link className="btn btn-primary" to={`/restaurant/${restaurant.restaurantId}`}>View</Link>
+                  </div>
+                  <p>{restaurant.location}</p>
+                  <img className="card-img-top" src={restaurant.imageURL} alt="Card image cap" />
+                </div>
               </div>
-              <p>City</p>
-              <img className="card-img-top" src="images/restaurant.png" alt="Card image cap" />
             </div>
-          </div>
-        </div>
-
-        <div className="col-12 col-md-6 col-lg-4">
-          <div className="card">
-            <div className="card-body">
-              <div className="d-flex justify-content-between align-items-center">
-                <h5 className="card-title">Company Name</h5>
-                <button className="btn btn-primary">View</button>
-              </div>
-              <p>City</p>
-              <img className="card-img-top" src="images/restaurant.png" alt="Card image cap" />
-            </div>
-          </div>
-        </div>
+          )
+        })}
       </div>
-      
     </div>
   )
 }
