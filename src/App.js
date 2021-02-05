@@ -53,6 +53,10 @@ class App extends Component{
     }
   }
 
+  async createRestaurant(name, location, imageURL, description, amount){
+    await this.state.restaurantsBlockchain.methods.createRestaurant(name, description, location, imageURL, amount).send({ from: this.state.account });
+  }
+
   render(){
     return (
       <Router className="App">
@@ -61,7 +65,7 @@ class App extends Component{
             <Restaurant />
           </Route>
           <Route path="/add-restaurant">
-            <AddRestaurant />
+            <AddRestaurant createRestaurant={this.createRestaurant.bind(this)}/>
           </Route>
           <Route path="/">
             <Restaurants />

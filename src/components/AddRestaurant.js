@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom'
 
-function AddRestaurant(){
+function AddRestaurant({ createRestaurant }){
+  const history = useHistory();
+
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
   const [imageURL, setImageURL] = useState('');
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
 
-  function addRestaurant(){
-    console.log(name, location, imageURL, description, amount);
+  async function addRestaurant(){
+    await createRestaurant(name, location, imageURL, description, amount);
+
+    history.push('/');
   }
 
   return(
     <div className="container">
-      <h1>Add Restaurant</h1>
+      <h1 className="text-center">Add Restaurant</h1>
 
       <div className="row">
-        <div className="col-12 col-md-6 col-lg-4">
+        <div className="col-12 col-md-6 col-lg-5 m-auto">
           <div className="card">
             <div className="card-body">
               <div className="form-group">
