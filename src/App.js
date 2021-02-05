@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route  } from 'react-router-dom';
 import Web3 from 'web3';
 
 import './App.css';
+import Restaurants from './components/Restaurants';
 
 class App extends Component{
   async componentWillMount(){
@@ -26,7 +27,9 @@ class App extends Component{
   render(){
     return (
       <Router className="App">
-        <h1>Fund The Restaurants</h1>
+        <Route path="/">
+          <Restaurants />
+        </Route>
       </Router>
     );
   }
