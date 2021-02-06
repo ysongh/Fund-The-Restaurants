@@ -1,6 +1,8 @@
 import React from 'react';
 import { useParams } from "react-router";
 
+import DonationModal from './DonationModal';
+
 function Restaurant({ donateRestaurant, restaurants }){
   const { id } =  useParams();
 
@@ -17,7 +19,9 @@ function Restaurant({ donateRestaurant, restaurants }){
               <p>{restaurants[id - 1]?.location}</p>
               <p>{restaurants[id - 1]?.description}</p>
               <p>{restaurants[id - 1] && window.web3.utils.fromWei(restaurants[id - 1].donationNeeded.toString(), 'Ether')} ETH</p>
-              <button className="btn primary-bg-color btn-block" onClick={() => donateRestaurant(id)}>Donate</button>
+              <button className="btn primary-bg-color btn-block" data-toggle="modal" data-target="#donationModal">
+                Donate
+              </button>
             </div>
           </div>
         </div>
@@ -31,6 +35,7 @@ function Restaurant({ donateRestaurant, restaurants }){
         </div>
       </div>
       
+      <DonationModal donateRestaurant={donateRestaurant} id={id} />
     </div>
   )
 }

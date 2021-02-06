@@ -73,7 +73,7 @@ class App extends Component{
       .send({ from: this.state.account });
   }
 
-  async donateRestaurant(id, amount = 1){
+  async donateRestaurant(id, amount){
     await this.state.restaurantsBlockchain.methods
       .donateETHToRestaurant(id)
       .send({ from: this.state.account, value: window.web3.utils.toWei(amount.toString(), 'Ether') });
