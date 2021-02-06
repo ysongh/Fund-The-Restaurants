@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router";
 
 import DonationModal from './DonationModal';
 
-function Restaurant({ donateRestaurant, restaurants }){
+function Restaurant({ getDonationLog, donateRestaurant, restaurants }){
   const { id } =  useParams();
+
+  const [donationList, setDonationList] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      await getDonationLog();
+    }
+
+    fetchData();
+  }, [])
 
   return(
     <div className="container">

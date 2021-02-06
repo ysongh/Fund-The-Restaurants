@@ -14,7 +14,8 @@ class App extends Component{
     account: '',
     restaurantCount: 0,
     restaurantsBlockchain: null,
-    restaurants: []
+    restaurants: [],
+    donationList: []
   }
 
   async componentWillMount(){
@@ -79,6 +80,11 @@ class App extends Component{
       .send({ from: this.state.account, value: window.web3.utils.toWei(amount.toString(), 'Ether') });
   }
 
+  async getDonationLog(){
+    const transactions = await this.state.restaurantsBlockchain.getPastEvents('DonationForRestaurant', { fromBlock: 0, toBlock: 'latest' });
+    console.log(transactions)
+  }
+
   render(){
     return (
       <Router className="App">
@@ -90,7 +96,8 @@ class App extends Component{
           <Route path="/restaurant/:id">
             <Restaurant
               restaurants={this.state.restaurants}
-              donateRestaurant={this.donateRestaurant.bind(this)}/>
+              donateRestaurant={this.donateRestaurant.bind(this)}
+              getDonationLog={this.getDonationLog.bind(this)} />
           </Route>
           <Route path="/">
             <Restaurants restaurants={this.state.restaurants} />
