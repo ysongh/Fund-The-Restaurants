@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from "react-router";
 
-function Restaurant({ restaurants }){
+function Restaurant({ donateRestaurant, restaurants }){
   const { id } =  useParams();
 
   return(
@@ -16,7 +16,8 @@ function Restaurant({ restaurants }){
               <h5 className="card-title">{restaurants[id - 1]?.name}</h5>
               <p>{restaurants[id - 1]?.location}</p>
               <p>{restaurants[id - 1]?.description}</p>
-              <button className="btn btn-primary btn-block">Donate</button>
+              <p>{restaurants[id - 1] && window.web3.utils.fromWei(restaurants[id - 1].donationNeeded.toString(), 'Ether')} ETH</p>
+              <button className="btn btn-primary btn-block" onClick={() => donateRestaurant(id)}>Donate</button>
             </div>
           </div>
         </div>

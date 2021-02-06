@@ -67,7 +67,15 @@ class App extends Component{
   }
 
   async createRestaurant(name, location, imageURL, description, amount){
-    await this.state.restaurantsBlockchain.methods.createRestaurant(name, description, location, imageURL, amount).send({ from: this.state.account });
+    await this.state.restaurantsBlockchain.methods
+      .createRestaurant(name, description, location, imageURL, window.web3.utils.toWei(amount.toString(), 'Ether'))
+      .send({ from: this.state.account });
+  }
+
+  async donateRestaurant(id, amount = 1){
+    await this.state.restaurantsBlockchain.methods
+      .donateETHToRestaurant(id)
+      .send({ from: this.state.account, value: window.web3.utils.toWei(amount.toString(), 'Ether') });
   }
 
   render(){
@@ -78,7 +86,9 @@ class App extends Component{
             <AddRestaurant createRestaurant={this.createRestaurant.bind(this)}/>
           </Route>
           <Route path="/restaurant/:id">
-            <Restaurant restaurants={this.state.restaurants} />
+            <Restaurant
+              restaurants={this.state.restaurants}
+              donateRestaurant={this.donateRestaurant.bind(this)}/>
           </Route>
           <Route path="/">
             <Restaurants restaurants={this.state.restaurants} />
