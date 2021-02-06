@@ -81,8 +81,8 @@ class App extends Component{
   }
 
   async getDonationLog(){
-    const transactions = await this.state.restaurantsBlockchain.getPastEvents('DonationForRestaurant', { fromBlock: 0, toBlock: 'latest' });
-    console.log(transactions)
+    const transactions = await this.state.restaurantsBlockchain?.getPastEvents('DonationForRestaurant', { fromBlock: 0, toBlock: 'latest'});
+    this.setState({ donationList: transactions });
   }
 
   render(){
@@ -96,6 +96,7 @@ class App extends Component{
           <Route path="/restaurant/:id">
             <Restaurant
               restaurants={this.state.restaurants}
+              donationList={this.state.donationList}
               donateRestaurant={this.donateRestaurant.bind(this)}
               getDonationLog={this.getDonationLog.bind(this)} />
           </Route>

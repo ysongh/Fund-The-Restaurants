@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from "react-router";
 
 import DonationModal from './DonationModal';
 
-function Restaurant({ getDonationLog, donateRestaurant, restaurants }){
+function Restaurant({ getDonationLog, donateRestaurant, restaurants, donationList }){
   const { id } =  useParams();
-
-  const [donationList, setDonationList] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -40,6 +38,28 @@ function Restaurant({ getDonationLog, donateRestaurant, restaurants }){
           <div className="card">
             <div className="card-body">
               <h5 className="card-title">Donation Log</h5>
+                <div className="table-responsive">
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      { donationList?.map((transaction, key) => {
+                        return (
+                          <tr key={key}>
+                            <td>{key + 1}</td>
+                            <td>{transaction.returnValues.from.substring(0, 7)}...{transaction.returnValues.from.substring(35, 42)}</td>
+                            <td>{window.web3.utils.fromWei(transaction.returnValues.amount, 'ether')}</td>
+                          </tr>
+                        )
+                      }) }
+                    </tbody>
+                  </table>
+              </div>
             </div>
           </div>
         </div>
