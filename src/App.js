@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route  } from 'react-router-dom';
 import Web3 from 'web3';
 
 import './App.css';
+import Navbar from './components/layout/Navbar';
 import RestaurantsBlockchain from './abis/Restaurants.json';
 import Restaurants from './components/Restaurants';
 import Restaurant from './components/Restaurant';
@@ -81,6 +82,7 @@ class App extends Component{
   render(){
     return (
       <Router className="App">
+        <Navbar />
         <Switch>
           <Route path="/add-restaurant">
             <AddRestaurant createRestaurant={this.createRestaurant.bind(this)}/>
