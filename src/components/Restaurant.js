@@ -6,7 +6,7 @@ function Restaurant({ donateRestaurant, restaurants }){
 
   return(
     <div className="container">
-      <h1>Restaurant Detail</h1>
+      <h1 className="my-3">Restaurant Detail</h1>
 
       <div className="row">
         <div className="col-12 col-md-6 col-lg-4 mb-3">
@@ -17,7 +17,7 @@ function Restaurant({ donateRestaurant, restaurants }){
               <p>{restaurants[id - 1]?.location}</p>
               <p>{restaurants[id - 1]?.description}</p>
               <p>{restaurants[id - 1] && window.web3.utils.fromWei(restaurants[id - 1].donationNeeded.toString(), 'Ether')} ETH</p>
-              <button className="btn btn-primary btn-block" onClick={() => donateRestaurant(id)}>Donate</button>
+              <button className="btn primary-bg-color btn-block" onClick={() => donateRestaurant(id)}>Donate</button>
             </div>
           </div>
         </div>

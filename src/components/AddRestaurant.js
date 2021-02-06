@@ -18,7 +18,7 @@ function AddRestaurant({ createRestaurant }){
 
   return(
     <div className="container">
-      <h1 className="text-center">Add Restaurant</h1>
+      <h1 className="text-center my-3">Add Restaurant</h1>
 
       <div className="row">
         <div className="col-12 col-md-6 col-lg-5 m-auto">
@@ -79,7 +79,7 @@ function AddRestaurant({ createRestaurant }){
                   onChange={(e) => setDescription(e.target.value)}  />
               </div>
 
-              <button className="btn btn-primary btn-block" onClick={addRestaurant}>
+              <button className="btn primary-bg-color btn-block" onClick={addRestaurant}>
                 Create
               </button>
             </div>

@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 function Restaurants({ restaurants }){
   return(
     <div className="container">
-      <h1>List of Restaurants</h1>
-      <Link className="btn btn-primary" to="/add-restaurant">Add Restaurant</Link>
+      <h1 className="my-3">List of Restaurants</h1>
 
       <div className="row">
         {restaurants.map(restaurant => {
@@ -15,7 +14,7 @@ function Restaurants({ restaurants }){
                 <div className="card-body">
                   <div className="d-flex justify-content-between align-items-center">
                     <h5 className="card-title">{restaurant.name}</h5>
-                    <Link className="btn btn-primary" to={`/restaurant/${restaurant.restaurantId}`}>View</Link>
+                    <Link className="btn primary-bg-color" to={`/restaurant/${restaurant.restaurantId}`}>View</Link>
                   </div>
                   <p>{restaurant.location}</p>
                   <img className="card-img-top" src={restaurant.imageURL} alt="Card image cap" />
