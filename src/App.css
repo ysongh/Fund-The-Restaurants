@@ -1,2 +1,11 @@
 .primary-bg-color { background-color: #FFC93C; }
 .secondary-bg-color { background-color: #FF9A3C; }
+
+.donation-needed {
+    font-size: 1rem;
+    position: absolute;
+    background-color: #FF9A3C;
+    right: 20px;
+    bottom: 20px;
+    padding: 10px;
+}
