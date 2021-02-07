@@ -43,6 +43,7 @@ contract Restaurants {
   function donateETHToRestaurant(uint _restaurantId) public payable {
     Restaurant memory _restaurant = restaurants[_restaurantId];
 
+    require(_restaurant.donationNeeded >= msg.value);
     _restaurant.owner.transfer(msg.value);
 
     _restaurant.donationNeeded -= msg.value;

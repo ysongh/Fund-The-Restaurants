@@ -1,5 +1,9 @@
 const { assert } = require('chai');
 
+require('chai')
+    .use(require('chai-as-promised'))
+    .should();
+
 const Restaurants = artifacts.require("Restaurants");
 
 function tokensToWei(val) {
@@ -105,6 +109,9 @@ contract('Restaurants', ([deployer, account1, account2]) => {
             assert.equal(event.donationNeeded.toString(), oldDonationNeed, 'Donation needed is correct');
             assert.equal(event.from, account2, 'Donator address is correct');
             assert.equal(event.owner, account1, 'Owner address is correct');
+
+            // reject if user donate more than it neededs
+            await restaurants.donateETHToRestaurant(restaurantId, { from: account2, value: tokensToWei('50') }).should.be.rejected;
         });
     });
 })
