@@ -91,7 +91,8 @@ class App extends Component{
         <Navbar />
         <Switch>
           <Route path="/add-restaurant">
-            <AddRestaurant createRestaurant={this.createRestaurant.bind(this)}/>
+            <AddRestaurant
+              createRestaurant={this.createRestaurant.bind(this)} />
           </Route>
           <Route path="/restaurant/:id">
             <Restaurant

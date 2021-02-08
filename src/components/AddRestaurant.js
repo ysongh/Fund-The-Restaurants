@@ -12,18 +12,20 @@ function AddRestaurant({ createRestaurant }){
 
   async function addRestaurant(){
     await createRestaurant(name, location, imageURL, description, amount);
-
+    
     history.push('/');
   }
 
   return(
     <div className="container">
-      <h1 className="text-center my-3">Add Restaurant</h1>
-
       <div className="row">
         <div className="col-12 col-md-6 col-lg-5 m-auto">
-          <div className="card">
+          
+          <div className="card mt-4">
             <div className="card-body">
+              <img className="icon" src="/images/icon1.png" alt="Icon" />
+              <h1 className="text-center mb-4">Add Restaurant</h1>
+
               <div className="form-group">
                 <label>Name of the Restaurant</label>
                 <input
@@ -46,26 +48,28 @@ function AddRestaurant({ createRestaurant }){
                 />
               </div>
 
-              <div className="form-group">
-                <label>Image URL</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="imageURL"
-                  value={imageURL}
-                  onChange={(e) => setImageURL(e.target.value)} 
-                />
-              </div>
+              <div className="d-flex justify-content-between">
+                <div className="form-group">
+                  <label>Image URL</label>
+                  <input
+                    className="form-control"
+                    type="text"
+                    name="imageURL"
+                    value={imageURL}
+                    onChange={(e) => setImageURL(e.target.value)} 
+                  />
+                </div>
 
-              <div className="form-group">
-                <label>Amount</label>
-                <input
-                  className="form-control"
-                  type="number"
-                  name="amount"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)} 
-                />
+                <div className="form-group">
+                  <label>Amount</label>
+                  <input
+                    className="form-control"
+                    type="number"
+                    name="amount"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)} 
+                  />
+                </div>
               </div>
 
               <div className="form-group">
@@ -74,7 +78,7 @@ function AddRestaurant({ createRestaurant }){
                   className="form-control"
                   type="text"
                   name="description"
-                  rows="7"
+                  rows="5"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}  />
               </div>
