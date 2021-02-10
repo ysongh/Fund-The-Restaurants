@@ -8,7 +8,7 @@ function Restaurant({ getDonationLog, donateRestaurant, restaurants, donationLis
 
   useEffect(() => {
     async function fetchData() {
-      await getDonationLog();
+      await getDonationLog(id);
     }
 
     fetchData();

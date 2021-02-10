@@ -80,9 +80,9 @@ class App extends Component{
       .send({ from: this.state.account, value: window.web3.utils.toWei(amount.toString(), 'Ether') });
   }
 
-  async getDonationLog(){
-    const transactions = await this.state.restaurantsBlockchain?.getPastEvents('DonationForRestaurant', { fromBlock: 0, toBlock: 'latest'});
-    this.setState({ donationList: transactions });
+  async getDonationLog(restaurantId){
+    const transactions = await this.state.restaurantsBlockchain?.getPastEvents('DonationForRestaurant', { fromBlock: 0, toBlock: 'latest' });
+    this.setState({ donationList: transactions.filter(transaction => transaction.returnValues.restaurantId === restaurantId ) });
   }
 
   render(){
