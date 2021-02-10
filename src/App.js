@@ -69,9 +69,11 @@ class App extends Component{
   }
 
   async createRestaurant(name, location, imageURL, description, amount){
-    await this.state.restaurantsBlockchain.methods
+    const data = await this.state.restaurantsBlockchain.methods
       .createRestaurant(name, description, location, imageURL, window.web3.utils.toWei(amount.toString(), 'Ether'))
       .send({ from: this.state.account });
+
+    this.setState({ restaurants: [...this.state.restaurants, data.events.RestaurantCreated.returnValues] });
   }
 
   async donateRestaurant(id, amount){
