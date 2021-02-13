@@ -84,7 +84,7 @@ class App extends Component{
 
   async getDonationLog(restaurantId){
     const transactions = await this.state.restaurantsBlockchain?.getPastEvents('DonationForRestaurant', { fromBlock: 0, toBlock: 'latest' });
-    this.setState({ donationList: transactions.filter(transaction => transaction.returnValues.restaurantId === restaurantId ) });
+    this.setState({ donationList: transactions?.filter(transaction => transaction.returnValues.restaurantId === restaurantId ) });
   }
 
   render(){
