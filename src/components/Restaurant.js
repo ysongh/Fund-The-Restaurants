@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from "react-router";
+import moment from 'moment';
 
 import DonationModal from './DonationModal';
 
@@ -43,6 +44,7 @@ function Restaurant({ getDonationLog, donateRestaurant, restaurants, donationLis
                     <thead>
                       <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Date</th>
                         <th scope="col">From</th>
                         <th scope="col">Amount</th>
                       </tr>
@@ -52,6 +54,7 @@ function Restaurant({ getDonationLog, donateRestaurant, restaurants, donationLis
                         return (
                           <tr key={key}>
                             <td>{key + 1}</td>
+                            <td>{moment.unix(transaction.returnValues.date).format('M/D/Y h:mm:ss A')}</td>
                             <td>{transaction.returnValues.from.substring(0, 7)}...{transaction.returnValues.from.substring(35, 42)}</td>
                             <td>{window.web3.utils.fromWei(transaction.returnValues.amount, 'ether')}</td>
                           </tr>
