@@ -54,6 +54,7 @@ contract('Restaurants', ([deployer, account1, account2]) => {
             assert.equal(event.description, restaurantDescription, 'Description is correct');
             assert.equal(event.location, restaurantLocation, 'Location is correct');
             assert.equal(event.imageURL, restaurantImageURL, 'Image URL is correct');
+            assert.notEqual(event.date, null, "Date is not null");
             assert.equal(event.donationNeeded, restaurantDonationNeeded, 'Donation needed is correct');
             assert.equal(event.owner, account1, 'Owner is correct');
         });
@@ -69,6 +70,7 @@ contract('Restaurants', ([deployer, account1, account2]) => {
             assert.equal(restaurant.description, restaurantDescription, 'Description is correct');
             assert.equal(restaurant.location, restaurantLocation, 'Location is correct');
             assert.equal(restaurant.imageURL, restaurantImageURL, 'Image URL is correct');
+            assert.notEqual(restaurant.date, null, "Date is not null");
             assert.equal(restaurant.donationNeeded, restaurantDonationNeeded, 'Donation needed is correct');
             assert.equal(restaurant.owner, account1, 'Owner is correct');
         });
@@ -107,6 +109,7 @@ contract('Restaurants', ([deployer, account1, account2]) => {
             assert.equal(event.restaurantId, restaurantId, 'Restaurant Id is correct');
             assert.equal(event.amount.toString(), tokensToWei('1'), 'Amount is correct');
             assert.equal(event.donationNeeded.toString(), oldDonationNeed, 'Donation needed is correct');
+            assert.notEqual(event.date, null, "Date is not null");
             assert.equal(event.from, account2, 'Donator address is correct');
             assert.equal(event.owner, account1, 'Owner address is correct');
 

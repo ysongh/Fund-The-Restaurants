@@ -12,6 +12,7 @@ contract Restaurants {
     string location;
     string imageURL;
     uint donationNeeded;
+    uint date;
     address payable owner;
   }
 
@@ -22,6 +23,7 @@ contract Restaurants {
     string location,
     string imageURL,
     uint donationNeeded,
+    uint date,
     address payable owner
   );
 
@@ -29,6 +31,7 @@ contract Restaurants {
     uint restaurantId,
     uint amount,
     uint donationNeeded,
+    uint date,
     address from,
     address payable owner
   );
@@ -36,8 +39,8 @@ contract Restaurants {
   function createRestaurant(string memory _name, string memory _description, string memory _location, string memory _imageURL, uint donationNeeded) public {
     restaurantCount++;
 
-    restaurants[restaurantCount] = Restaurant(restaurantCount, _name, _description, _location, _imageURL, donationNeeded, msg.sender);
-    emit RestaurantCreated(restaurantCount, _name, _description, _location, _imageURL, donationNeeded, msg.sender);
+    restaurants[restaurantCount] = Restaurant(restaurantCount, _name, _description, _location, _imageURL, donationNeeded, now, msg.sender);
+    emit RestaurantCreated(restaurantCount, _name, _description, _location, _imageURL, donationNeeded, now, msg.sender);
   }
 
   function donateETHToRestaurant(uint _restaurantId) public payable {
@@ -49,6 +52,6 @@ contract Restaurants {
     _restaurant.donationNeeded -= msg.value;
     restaurants[_restaurantId] = _restaurant;
 
-    emit DonationForRestaurant(_restaurantId, msg.value, _restaurant.donationNeeded, msg.sender, _restaurant.owner);
+    emit DonationForRestaurant(_restaurantId, msg.value, _restaurant.donationNeeded, now, msg.sender, _restaurant.owner);
   }
 }
