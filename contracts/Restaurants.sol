@@ -1,9 +1,12 @@
 pragma solidity ^0.6.12;
 
-contract Restaurants {
-  string public name = "Restaurants";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+
+contract Restaurants is ERC721 {
   uint public restaurantCount = 0;
   mapping(uint => Restaurant) public restaurants;
+
+  constructor() ERC721("FundRestaurantsToken", "FRT") public {}
 
   struct Restaurant {
     uint restaurantId;
