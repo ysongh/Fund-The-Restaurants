@@ -46,7 +46,7 @@ contract Restaurants is ERC721 {
     emit RestaurantCreated(restaurantCount, _name, _description, _location, _imageURL, donationNeeded, now, msg.sender);
   }
 
-  function donateETHToRestaurant(uint _restaurantId) public payable {
+  function donateETHToRestaurant(uint _restaurantId, string memory _tokenURI) public payable {
     Restaurant memory _restaurant = restaurants[_restaurantId];
 
     require(_restaurant.donationNeeded >= msg.value);
@@ -54,6 +54,11 @@ contract Restaurants is ERC721 {
 
     _restaurant.donationNeeded -= msg.value;
     restaurants[_restaurantId] = _restaurant;
+
+    // Create NFT
+    uint _tokenId = totalSupply().add(1);
+    _safeMint(msg.sender, _tokenId);
+    _setTokenURI(_tokenId, _tokenURI);
 
     emit DonationForRestaurant(_restaurantId, msg.value, _restaurant.donationNeeded, now, msg.sender, _restaurant.owner);
   }

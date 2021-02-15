@@ -25,11 +25,6 @@ contract('Restaurants', ([deployer, account1, account2]) => {
             assert.notEqual(address, null);
             assert.notEqual(address, undefined);
         });
-
-        it('has correct name', async() => {
-            const name = await restaurants.name();
-            assert.equal(name, "Restaurants");
-        });
     });
 
     describe('restaurant', async() => {
@@ -91,7 +86,7 @@ contract('Restaurants', ([deployer, account1, account2]) => {
             let oldDonatorBalanace = await web3.eth.getBalance(account1);
             oldDonatorBalanace = new web3.utils.BN(oldDonatorBalanace);
 
-            result = await restaurants.donateETHToRestaurant(restaurantId, { from: account2, value: tokensToWei('1') });
+            result = await restaurants.donateETHToRestaurant(restaurantId, restaurant.imageURL, { from: account2, value: tokensToWei('1') });
             
             let newDonatorBalanace = await web3.eth.getBalance(account1);
             newDonatorBalanace = new web3.utils.BN(newDonatorBalanace);
@@ -105,7 +100,7 @@ contract('Restaurants', ([deployer, account1, account2]) => {
 
             oldDonationNeed -= +tokensToWei('1');
             
-            const event = result.logs[0].args;
+            const event = result.logs[1].args;
             assert.equal(event.restaurantId, restaurantId, 'Restaurant Id is correct');
             assert.equal(event.amount.toString(), tokensToWei('1'), 'Amount is correct');
             assert.equal(event.donationNeeded.toString(), oldDonationNeed, 'Donation needed is correct');
@@ -116,5 +111,31 @@ contract('Restaurants', ([deployer, account1, account2]) => {
             // reject if user donate more than it neededs
             await restaurants.donateETHToRestaurant(restaurantId, { from: account2, value: tokensToWei('50') }).should.be.rejected;
         });
+
+        it('mints tokens for donator', async () => {
+            result = await restaurants.totalSupply();
+            assert.equal(result.toString(), '1', 'Total supply is correct');
+
+            result = await restaurants.balanceOf(account2);
+            assert.equal(result.toString(), '1', 'balanceOf is correct');
+
+            result = await restaurants.ownerOf('1');
+            assert.equal(result.toString(), account2.toString(), 'Donator get the token');
+            result = await restaurants.tokenOfOwnerByIndex(account2, 0);
+            
+            let balanceOf = await restaurants.balanceOf(account2);
+            let tokenIds = [];
+
+            for(let i = 0; i < balanceOf; i++){
+                let id = await restaurants.tokenOfOwnerByIndex(account2, i);
+                tokenIds.push(id.toString());
+            }
+            
+            let expected = ['1'];
+            assert.equal(tokenIds.toString(), expected.toString(), 'tokenIds is correct');
+
+            let tokenURI = await restaurants.tokenURI('1');
+            assert.equal(tokenURI, restaurant.imageURL);
+        })
     });
 })
