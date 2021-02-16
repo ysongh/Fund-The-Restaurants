@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-function DonationModal({ donateRestaurant, id }){
+function DonationModal({ donateRestaurant, id, imageURL}){
   const [amount, setAmount] = useState('');
   
   function donate(){
-    donateRestaurant(id, amount);
+    donateRestaurant(id, amount, imageURL);
   }
 
   return(

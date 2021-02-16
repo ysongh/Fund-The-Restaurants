@@ -17,7 +17,7 @@ function Restaurants({ restaurants }){
                     <Link className="btn primary-bg-color" to={`/restaurant/${restaurant.restaurantId}`}>View</Link>
                   </div>
                   <p>{restaurant.location}</p>
-                  <img className="card-img-top" src={restaurant.imageURL} alt="Card image cap" />
+                  <img className="card-img-top" src={restaurant.imageURL} alt="Restaurant" />
                   <span className="badge badge-secondary donation-needed">Need {window.web3.utils.fromWei(restaurant.donationNeeded.toString(), 'Ether')} ETH</span>
                 </div>
               </div>

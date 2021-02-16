@@ -8,14 +8,17 @@ import RestaurantsBlockchain from './abis/Restaurants.json';
 import Restaurants from './components/Restaurants';
 import Restaurant from './components/Restaurant';
 import AddRestaurant from './components/AddRestaurant';
+import MyTokens from './components/MyTokens';
 
 class App extends Component{
   state = {
     account: '',
     restaurantCount: 0,
+    totalSupply: 0,
     restaurantsBlockchain: null,
     restaurants: [],
-    donationList: []
+    donationList: [],
+    tokens: []
   }
 
   async componentWillMount(){
@@ -42,6 +45,18 @@ class App extends Component{
 
       const restaurantCount = await restaurantsBlockchain.methods.restaurantCount().call();
       this.setState({ restaurantCount });
+
+      const totalSupply = await restaurantsBlockchain.methods.totalSupply().call();
+      this.setState({ totalSupply: totalSupply });
+
+      for(let i = 1; i <= totalSupply; i++){
+        let id = await restaurantsBlockchain.methods.tokenOfOwnerByIndex(accounts[0], i - 1).call();
+        let tokenURI = await restaurantsBlockchain.methods.tokenURI(id).call();
+
+        this.setState({
+          tokens: [...this.state.tokens, {id, tokenURI}]
+        });
+      }
     }else{
       window.alert('Contract is not deployed to detected network')
     }
@@ -76,9 +91,9 @@ class App extends Component{
     this.setState({ restaurants: [...this.state.restaurants, data.events.RestaurantCreated.returnValues] });
   }
 
-  async donateRestaurant(id, amount){
+  async donateRestaurant(id, amount, imageURL){
     await this.state.restaurantsBlockchain.methods
-      .donateETHToRestaurant(id)
+      .donateETHToRestaurant(id, imageURL)
       .send({ from: this.state.account, value: window.web3.utils.toWei(amount.toString(), 'Ether') });
   }
 
@@ -92,6 +107,9 @@ class App extends Component{
       <Router className="App">
         <Navbar />
         <Switch>
+          <Route path="/mytokens">
+            <MyTokens tokens={this.state.tokens} />
+          </Route>
           <Route path="/add-restaurant">
             <AddRestaurant
               createRestaurant={this.createRestaurant.bind(this)} />
