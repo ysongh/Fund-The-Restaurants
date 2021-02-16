@@ -137,5 +137,14 @@ contract('Restaurants', ([deployer, account1, account2]) => {
             let tokenURI = await restaurants.tokenURI('1');
             assert.equal(tokenURI, restaurant.imageURL);
         })
+
+        it('has valid rgb color', async () => {
+            result = await restaurants.nft(1);
+
+            assert.notEqual(result.red, undefined);
+            assert.notEqual(result.green, undefined);
+            assert.notEqual(result.blue, undefined);
+            assert.isAtMost(result.red.toNumber(), 255, 'Value must not be greater than 255');
+        })
     });
 })

@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 contract Restaurants is ERC721 {
   uint public restaurantCount = 0;
   mapping(uint => Restaurant) public restaurants;
+  mapping(uint => NFT) public nft;
 
   constructor() ERC721("FundRestaurantsToken", "FRT") public {}
 
@@ -17,6 +18,12 @@ contract Restaurants is ERC721 {
     uint donationNeeded;
     uint date;
     address payable owner;
+  }
+
+  struct NFT {
+    uint red;
+    uint green;
+    uint blue;
   }
 
   event RestaurantCreated (
@@ -60,6 +67,13 @@ contract Restaurants is ERC721 {
     _safeMint(msg.sender, _tokenId);
     _setTokenURI(_tokenId, _tokenURI);
 
+    // Random color
+    nft[_tokenId] = NFT(getRandomValue(), getRandomValue(), getRandomValue());
+
     emit DonationForRestaurant(_restaurantId, msg.value, _restaurant.donationNeeded, now, msg.sender, _restaurant.owner);
+  }
+
+  function getRandomValue() internal view returns(uint) {
+    return uint(keccak256(abi.encodePacked(now, block.difficulty, msg.sender))) % 255;
   }
 }
