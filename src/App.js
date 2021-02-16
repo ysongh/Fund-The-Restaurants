@@ -52,9 +52,15 @@ class App extends Component{
       for(let i = 1; i <= totalSupply; i++){
         let id = await restaurantsBlockchain.methods.tokenOfOwnerByIndex(accounts[0], i - 1).call();
         let tokenURI = await restaurantsBlockchain.methods.tokenURI(id).call();
-
+        let data = await restaurantsBlockchain.methods.nft(id).call();
         this.setState({
-          tokens: [...this.state.tokens, {id, tokenURI}]
+          tokens: [...this.state.tokens, {
+            id,
+            tokenURI,
+            red: data.red,
+            green: data.green,
+            blue: data.blue
+          }]
         });
       }
     }else{
