@@ -50,18 +50,21 @@ class App extends Component{
       this.setState({ totalSupply: totalSupply });
 
       for(let i = 1; i <= totalSupply; i++){
-        let id = await restaurantsBlockchain.methods.tokenOfOwnerByIndex(accounts[0], i - 1).call();
-        let tokenURI = await restaurantsBlockchain.methods.tokenURI(id).call();
-        let data = await restaurantsBlockchain.methods.nft(id).call();
-        this.setState({
-          tokens: [...this.state.tokens, {
-            id,
-            tokenURI,
-            red: data.red,
-            green: data.green,
-            blue: data.blue
-          }]
-        });
+        const tokenOwner = await restaurantsBlockchain.methods.ownerOf(i).call();
+        
+        if(tokenOwner === accounts[0]){
+          let tokenURI = await restaurantsBlockchain.methods.tokenURI(i).call();
+          let data = await restaurantsBlockchain.methods.nft(i).call();
+          this.setState({
+            tokens: [...this.state.tokens, {
+              id: i,
+              tokenURI,
+              red: data.red,
+              green: data.green,
+              blue: data.blue
+            }]
+          });
+        }
       }
     }else{
       window.alert('Contract is not deployed to detected network')
