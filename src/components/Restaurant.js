@@ -23,7 +23,7 @@ function Restaurant({ getDonationLog, donateRestaurant, restaurants, donationLis
         <div className="col-12 col-md-6 col-lg-4 mb-3">
           <div className="card">
             <div className="card-body">
-              <img className="card-img-top mb-3" src={restaurants[id - 1]?.imageURL} alt="Card image cap" />
+              <img className="card-img-top mb-3" src={restaurants[id - 1]?.imageURL} alt="Restaurant" />
               <h5 className="card-title">{restaurants[id - 1]?.name}</h5>
               <p>{restaurants[id - 1]?.location}</p>
               <p>{restaurants[id - 1]?.description}</p>

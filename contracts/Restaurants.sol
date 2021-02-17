@@ -68,12 +68,15 @@ contract Restaurants is ERC721 {
     _setTokenURI(_tokenId, _tokenURI);
 
     // Random color
-    nft[_tokenId] = NFT(getRandomValue(), getRandomValue(), getRandomValue());
+    uint red = getRandomValue(253);
+    uint green = getRandomValue(254);
+    uint blue = getRandomValue(255);
+    nft[_tokenId] = NFT(red, green, blue);
 
     emit DonationForRestaurant(_restaurantId, msg.value, _restaurant.donationNeeded, now, msg.sender, _restaurant.owner);
   }
 
-  function getRandomValue() internal view returns(uint) {
-    return uint(keccak256(abi.encodePacked(now, block.difficulty, msg.sender))) % 255;
+  function getRandomValue(uint mod) internal view returns(uint) {
+    return uint(keccak256(abi.encodePacked(now, block.difficulty, msg.sender))) % mod;
   }
 }
