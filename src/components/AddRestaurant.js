@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
+
+import Spinner from './common/Spinner';
 
 function AddRestaurant({ createRestaurant }){
   const history = useHistory();
@@ -9,11 +11,20 @@ function AddRestaurant({ createRestaurant }){
   const [imageURL, setImageURL] = useState('');
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
+  const [loading, setLoading] = useState(false);
 
   async function addRestaurant(){
-    await createRestaurant(name, location, imageURL, description, amount);
+    try{
+      setLoading(true);
+      await createRestaurant(name, location, imageURL, description, amount);
+      
+      history.push('/');
+    }
+    catch(err){
+      console.error(err);
+      setLoading(false);
+    }
     
-    history.push('/');
   }
 
   return(
@@ -83,9 +94,15 @@ function AddRestaurant({ createRestaurant }){
                   onChange={(e) => setDescription(e.target.value)}  />
               </div>
 
-              <button className="btn primary-bg-color btn-block" onClick={addRestaurant}>
-                Create
-              </button>
+              {!loading ? (
+                <button className="btn primary-bg-color btn-block" onClick={addRestaurant}>
+                  Create
+                </button>
+              ) : (
+                <center>
+                  <Spinner />
+                </center>
+              ) }
             </div>
           </div>
         </div>

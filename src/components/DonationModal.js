@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
 
+import Spinner from './common/Spinner';
+
 function DonationModal({ donateRestaurant, id, imageURL}){
   const [amount, setAmount] = useState('');
   const [showAward, setShowAward] = useState(false);
   const [nft, setNFT] = useState({});
+  const [loading, setLoading] = useState(false);
   
   async function donate(){
-    const res = await donateRestaurant(id, amount, imageURL);
-    setNFT(res);
-    setShowAward(true)
+    try{
+      setLoading(true);
+      const res = await donateRestaurant(id, amount, imageURL);
+      setNFT(res);
+      setShowAward(true);
+    }
+    catch(err){
+      console.error(err);
+      setLoading(false);
+    }
   }
 
   return(
@@ -52,11 +62,16 @@ function DonationModal({ donateRestaurant, id, imageURL}){
               { !showAward ? (
                 <>
                   <button type="button" className="btn btn-light" data-dismiss="modal">Cancel</button>
-                  <button
-                    className="btn primary-bg-color"
-                    onClick={donate}>
-                      Send
-                  </button>
+                  {!loading ? (
+                    <button
+                      className="btn primary-bg-color"
+                      onClick={donate}>
+                        Send
+                    </button>
+                  ) : (
+                    <Spinner />
+                  ) }
+                  
                 </>
                 ) : (
                   <button type="button" className="btn btn-light" data-dismiss="modal">Close</button>
