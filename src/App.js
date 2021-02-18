@@ -101,9 +101,26 @@ class App extends Component{
   }
 
   async donateRestaurant(id, amount, imageURL){
-    await this.state.restaurantsBlockchain.methods
+    const res = await this.state.restaurantsBlockchain.methods
       .donateETHToRestaurant(id, imageURL)
       .send({ from: this.state.account, value: window.web3.utils.toWei(amount.toString(), 'Ether') });
+    
+    const tokenId = res.events.Transfer.returnValues.tokenId;
+
+    const tokenURI = await this.state.restaurantsBlockchain.methods.tokenURI(tokenId).call();
+    const data = await this.state.restaurantsBlockchain.methods.nft(tokenId).call();
+    const newToken = {
+      id: tokenId,
+      tokenURI,
+      red: data.red,
+      green: data.green,
+      blue: data.blue
+    }
+    this.setState({
+      tokens: [...this.state.tokens, newToken]
+    });
+
+    return newToken
   }
 
   async getDonationLog(restaurantId){

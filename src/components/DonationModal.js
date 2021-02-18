@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 
 function DonationModal({ donateRestaurant, id, imageURL}){
   const [amount, setAmount] = useState('');
+  const [showAward, setShowAward] = useState(false);
+  const [nft, setNFT] = useState({});
   
-  function donate(){
-    donateRestaurant(id, amount, imageURL);
+  async function donate(){
+    const res = await donateRestaurant(id, amount, imageURL);
+    setNFT(res);
+    setShowAward(true)
   }
 
   return(
@@ -20,26 +24,44 @@ function DonationModal({ donateRestaurant, id, imageURL}){
             </div>
 
             <div className="modal-body">
-              <div className="form-group mt-3 mb-4">
-                <label className="text-muted font-weight-bold" htmlFor="text">Amount</label>
-                <input
-                    className="form-control"
-                    name="Amount"
-                    type="number"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)} 
-                />
-              </div>
+              { !showAward ? (
+                <div className="form-group mt-3 mb-4">
+                  <label className="text-muted font-weight-bold" htmlFor="text">Amount</label>
+                  <input
+                      className="form-control"
+                      name="Amount"
+                      type="number"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)} 
+                  />
+                </div>
+              ) : (
+                <>
+                  <h2 className="text-center mb-3">You Earn NFT!</h2>
+                  <div className="card" style={{ background: `rgb(${nft.red}, ${nft.green}, ${nft.blue})`}}>
+                    <div className="card-body px-4">
+                      <img className="img-rounded" src={nft.tokenURI} alt="NFT" />
+                    </div>
+                  </div>
+                </>
+              ) }
+              
             </div>
 
             <div className="modal-footer">
-              <button type="button" className="btn btn-light" data-dismiss="modal">Cancel</button>
-              <button
-                className="btn primary-bg-color"
-                data-dismiss="modal"
-                onClick={donate}>
-                  Send
-              </button>
+              { !showAward ? (
+                <>
+                  <button type="button" className="btn btn-light" data-dismiss="modal">Cancel</button>
+                  <button
+                    className="btn primary-bg-color"
+                    onClick={donate}>
+                      Send
+                  </button>
+                </>
+                ) : (
+                  <button type="button" className="btn btn-light" data-dismiss="modal">Close</button>
+                ) }
+              
             </div>
           </div>
         </div>
