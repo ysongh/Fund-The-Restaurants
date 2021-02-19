@@ -138,9 +138,10 @@ contract('Restaurants', ([deployer, account1, account2]) => {
             assert.equal(tokenURI, restaurant.imageURL);
         })
 
-        it('has valid rgb color', async () => {
+        it('has valid rgb color and name', async () => {
             result = await restaurants.nft(1);
 
+            assert.notEqual(result.name, undefined);
             assert.notEqual(result.red, undefined);
             assert.notEqual(result.green, undefined);
             assert.notEqual(result.blue, undefined);

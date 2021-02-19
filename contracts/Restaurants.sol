@@ -21,6 +21,7 @@ contract Restaurants is ERC721 {
   }
 
   struct NFT {
+    string name;
     uint red;
     uint green;
     uint blue;
@@ -71,7 +72,7 @@ contract Restaurants is ERC721 {
     uint red = getRandomValue(253);
     uint green = getRandomValue(254);
     uint blue = getRandomValue(255);
-    nft[_tokenId] = NFT(red, green, blue);
+    nft[_tokenId] = NFT(_restaurant.name, red, green, blue);
 
     emit DonationForRestaurant(_restaurantId, msg.value, _restaurant.donationNeeded, now, msg.sender, _restaurant.owner);
   }

@@ -68,7 +68,11 @@ function Restaurant({ getDonationLog, donateRestaurant, restaurants, donationLis
         </div>
       </div>
       
-      <DonationModal donateRestaurant={donateRestaurant} id={id} imageURL={restaurants[id - 1]?.imageURL} />
+      <DonationModal
+        donateRestaurant={donateRestaurant}
+        id={id}
+        imageURL={restaurants[id - 1]?.imageURL}
+        restaurantName={restaurants[id - 1]?.name} />
     </div>
   )
 }

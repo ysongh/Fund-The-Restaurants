@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Spinner from './common/Spinner';
 
-function DonationModal({ donateRestaurant, id, imageURL}){
+function DonationModal({ donateRestaurant, id, imageURL, restaurantName}){
   const [amount, setAmount] = useState('');
   const [showAward, setShowAward] = useState(false);
   const [nft, setNFT] = useState({});
@@ -11,7 +11,7 @@ function DonationModal({ donateRestaurant, id, imageURL}){
   async function donate(){
     try{
       setLoading(true);
-      const res = await donateRestaurant(id, amount, imageURL);
+      const res = await donateRestaurant(id, amount, imageURL, restaurantName);
       setNFT(res);
       setShowAward(true);
     }

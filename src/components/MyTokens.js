@@ -12,6 +12,9 @@ function MyTokens({ tokens }){
               <div className="card" style={{ background: `rgb(${token.red}, ${token.green}, ${token.blue})`}}>
                 <div className="card-body px-4">
                   <img className="img-rounded" src={token.tokenURI} alt="NFT" />
+                  <center>
+                    <span className="badge badge-warning text-center">{token.name}</span>
+                  </center>
                 </div>
               </div>
             </div>
