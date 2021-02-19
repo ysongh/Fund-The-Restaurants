@@ -24,10 +24,23 @@ function Restaurant({ getDonationLog, donateRestaurant, restaurants, donationLis
           <div className="card">
             <div className="card-body">
               <img className="card-img-top mb-3" src={restaurants[id - 1]?.imageURL} alt="Restaurant" />
-              <h5 className="card-title">{restaurants[id - 1]?.name}</h5>
+              
+              <div className="d-flex justify-content-between align-items-center">
+                <h5 className="card-title">
+                  Need {restaurants[id - 1] && window.web3.utils.fromWei(restaurants[id - 1].donationNeeded.toString(), 'Ether')} BNB
+                </h5>
+                <button
+                  className="btn secondary-bg-color"
+                  onClick={() => {navigator.clipboard.writeText(`${window.location.origin}/restaurant/${id}`)}}
+                >
+                  Share
+                </button>
+              </div>
+              
+              <p className="lead m-0">{restaurants[id - 1]?.name}</p>
               <p>{restaurants[id - 1]?.location}</p>
-              <p>{restaurants[id - 1]?.description}</p>
-              <p>{restaurants[id - 1] && window.web3.utils.fromWei(restaurants[id - 1].donationNeeded.toString(), 'Ether')} ETH</p>
+              <p className="text-secondary">{restaurants[id - 1]?.description}</p>
+              
               <button className="btn primary-bg-color btn-block" data-toggle="modal" data-target="#donationModal">
                 Donate
               </button>
