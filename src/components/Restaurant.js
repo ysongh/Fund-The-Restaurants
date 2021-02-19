@@ -32,6 +32,10 @@ function Restaurant({ getDonationLog, donateRestaurant, restaurants, donationLis
                 <button
                   className="btn secondary-bg-color"
                   onClick={() => {navigator.clipboard.writeText(`${window.location.origin}/restaurant/${id}`)}}
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  data-trigger="focus"
+                  title="Copied"
                 >
                   Share
                 </button>
