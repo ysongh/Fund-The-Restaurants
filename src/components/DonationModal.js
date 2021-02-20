@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Confetti from 'react-confetti'
 
 import Spinner from './common/Spinner';
 
@@ -79,6 +80,11 @@ function DonationModal({ donateRestaurant, id, imageURL, restaurantName}){
               
             </div>
           </div>
+          <Confetti
+            width={500}
+            numberOfPieces={100}
+            run={showAward}
+          />
         </div>
       </div>
     </div>
