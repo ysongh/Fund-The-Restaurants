@@ -62,7 +62,8 @@ class App extends Component{
               name: data.name,
               red: data.red,
               green: data.green,
-              blue: data.blue
+              blue: data.blue,
+              amount: data.amount
             }]
           });
         }
@@ -116,7 +117,8 @@ class App extends Component{
       tokenURI,
       red: data.red,
       green: data.green,
-      blue: data.blue
+      blue: data.blue,
+      amount: window.web3.utils.toWei(amount.toString(), 'Ether')
     }
     this.setState({
       tokens: [...this.state.tokens, newToken]

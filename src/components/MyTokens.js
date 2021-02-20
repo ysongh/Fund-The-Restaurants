@@ -11,9 +11,16 @@ function MyTokens({ tokens }){
             <div className="col-6 col-md-4 col-lg-3 mb-3" key={token.id}>
               <div className="card" style={{ background: `rgb(${token.red}, ${token.green}, ${token.blue})`}}>
                 <div className="card-body px-4">
-                  <img className="img-rounded" src={token.tokenURI} alt="NFT" />
                   <center>
                     <span className="badge badge-warning text-center">{token.name}</span>
+                  </center>
+                  
+                  <img className="img-rounded" src={token.tokenURI} alt="NFT" />
+
+                  <center>
+                    <span className="badge secondary-bg-color">
+                      Donate {window.web3.utils.fromWei(token.amount.toString(), 'Ether')} BNB
+                    </span>
                   </center>
                 </div>
               </div>

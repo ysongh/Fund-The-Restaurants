@@ -25,6 +25,7 @@ contract Restaurants is ERC721 {
     uint red;
     uint green;
     uint blue;
+    uint amount;
   }
 
   event RestaurantCreated (
@@ -72,7 +73,7 @@ contract Restaurants is ERC721 {
     uint red = getRandomValue(253);
     uint green = getRandomValue(254);
     uint blue = getRandomValue(255);
-    nft[_tokenId] = NFT(_restaurant.name, red, green, blue);
+    nft[_tokenId] = NFT(_restaurant.name, red, green, blue, msg.value);
 
     emit DonationForRestaurant(_restaurantId, msg.value, _restaurant.donationNeeded, now, msg.sender, _restaurant.owner);
   }
