@@ -3,7 +3,7 @@ import Confetti from 'react-confetti'
 
 import Spinner from './common/Spinner';
 
-function DonationModal({ donateRestaurant, id, imageURL, restaurantName}){
+function DonationModal({ getDonationLog, donateRestaurant, id, imageURL, restaurantName}){
   const [amount, setAmount] = useState('');
   const [showAward, setShowAward] = useState(false);
   const [nft, setNFT] = useState({});
@@ -13,6 +13,7 @@ function DonationModal({ donateRestaurant, id, imageURL, restaurantName}){
     try{
       setLoading(true);
       const res = await donateRestaurant(id, amount, imageURL, restaurantName);
+      await getDonationLog(id);
       setNFT(res);
       setShowAward(true);
     }

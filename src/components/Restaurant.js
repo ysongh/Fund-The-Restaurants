@@ -86,6 +86,7 @@ function Restaurant({ getDonationLog, donateRestaurant, restaurants, donationLis
       </div>
       
       <DonationModal
+        getDonationLog={getDonationLog}
         donateRestaurant={donateRestaurant}
         id={id}
         imageURL={restaurants[id - 1]?.imageURL}
