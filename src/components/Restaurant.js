@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from "react-router";
 import moment from 'moment';
+import $ from 'jquery'; 
 
 import DonationModal from './DonationModal';
 
@@ -11,6 +12,10 @@ function Restaurant({ getDonationLog, donateRestaurant, restaurants, donationLis
     async function fetchData() {
       await getDonationLog(id);
     }
+
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    })
 
     fetchData();
   }, [])

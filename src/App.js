@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route  } from 'react-router-dom';
 import Web3 from 'web3';
-import $ from 'jquery'; 
 
 import './App.css';
 import Navbar from './components/layout/Navbar';
@@ -26,10 +25,6 @@ class App extends Component{
     await this.loadWeb3();
     await this.loadBlockchainData();
     await this.getRestaurant();
-
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-    })
   }
 
   async loadBlockchainData(){
