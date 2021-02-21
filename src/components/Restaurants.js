@@ -4,7 +4,15 @@ import { Link } from 'react-router-dom';
 function Restaurants({ restaurants }){
   return(
     <div className="container">
-      <h1 className="my-3">List of Restaurants</h1>
+      <div className="jumbotron my-3">
+        <h1 className="">Support these restaurants</h1>
+        <p className="lead">You can help them by donating some BNB and earn NFT</p>
+        <hr className="my-4"></hr>
+        <p>If you are an restaurant owner that need funds, you can fill out the form to create a post</p>
+        <p className="lead">
+          <Link className="btn primary-bg-color btn-lg" to="/add-restaurant" role="button">Get Started</Link>
+        </p>
+      </div>
 
       <div className="row">
         {restaurants.map(restaurant => {
@@ -18,7 +26,7 @@ function Restaurants({ restaurants }){
                   </div>
                   <p>{restaurant.location}</p>
                   <img className="card-img-top" src={restaurant.imageURL} alt="Restaurant" />
-                  <span className="badge badge-secondary donation-needed">Need {window.web3.utils.fromWei(restaurant.donationNeeded.toString(), 'Ether')} ETH</span>
+                  <span className="badge badge-secondary donation-needed">Need {window.web3.utils.fromWei(restaurant.donationNeeded.toString(), 'Ether')} BNB</span>
                 </div>
               </div>
             </div>
