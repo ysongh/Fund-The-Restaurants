@@ -15,7 +15,7 @@ function AddRestaurant({ createRestaurant }){
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
-  const [filename, setFilename] = useState('None');
+  const [filename, setFilename] = useState('');
   const [buffer, setBuffer] = useState('');
 
   async function addRestaurant(){
@@ -80,24 +80,22 @@ function AddRestaurant({ createRestaurant }){
                   onChange={(e) => setLocation(e.target.value)} 
                 />
               </div>
+              <div className="form-group">
+                <label>File</label>
+                <br />
+                <input className="text-white text-monospace" type="file" onChange={getFile} />
+                <p>{filename && filename}</p>
+              </div>
 
-              <div className="d-flex justify-content-between">
-                <div className="form-group">
-                  <label>File</label>
-                  <input className="text-white text-monospace" type="file" onChange={getFile} />
-                  <p>{filename}</p>
-                </div>
-
-                <div className="form-group">
-                  <label>Amount</label>
-                  <input
-                    className="form-control"
-                    type="number"
-                    name="amount"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)} 
-                  />
-                </div>
+              <div className="form-group">
+                <label>Amount</label>
+                <input
+                  className="form-control"
+                  type="number"
+                  name="amount"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)} 
+                />
               </div>
 
               <div className="form-group">
