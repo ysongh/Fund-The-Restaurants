@@ -18,9 +18,16 @@ function MyTokens({ tokens }){
                   <img className="img-rounded" src={token.tokenURI} alt="NFT" />
 
                   <center>
-                    <span className="badge secondary-bg-color">
-                      Donate {window.web3.utils.fromWei(token.amount.toString(), 'Ether')} BNB
-                    </span>
+                    {token.amount.toString() != '0' ? (
+                      <span className="badge secondary-bg-color">
+                        Donate {window.web3.utils.fromWei(token.amount.toString(), 'Ether')} BNB
+                      </span>
+                    ) : (
+                      <span className="badge secondary-bg-color">
+                        Share
+                      </span>
+                    )}
+                    
                   </center>
                 </div>
               </div>

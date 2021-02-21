@@ -124,7 +124,32 @@ class App extends Component{
       tokens: [...this.state.tokens, newToken]
     });
 
-    return newToken
+    return newToken;
+  }
+
+  async donateRestaurantWithReferrer(id, amount, imageURL, restaurantName, referrerAddress){
+    const res = await this.state.restaurantsBlockchain.methods
+      .donateETHToRestaurantWithReferrer(id, imageURL, referrerAddress)
+      .send({ from: this.state.account, value: window.web3.utils.toWei(amount.toString(), 'Ether') });
+    console.log(res)
+    const tokenId = res.events.Transfer[0].returnValues.tokenId;
+
+    const tokenURI = await this.state.restaurantsBlockchain.methods.tokenURI(tokenId).call();
+    const data = await this.state.restaurantsBlockchain.methods.nft(tokenId).call();
+    const newToken = {
+      id: tokenId,
+      name: restaurantName,
+      tokenURI,
+      red: data.red,
+      green: data.green,
+      blue: data.blue,
+      amount: window.web3.utils.toWei(amount.toString(), 'Ether')
+    }
+    this.setState({
+      tokens: [...this.state.tokens, newToken]
+    });
+
+    return newToken;
   }
 
   async getDonationLog(restaurantId){
@@ -144,8 +169,18 @@ class App extends Component{
             <AddRestaurant
               createRestaurant={this.createRestaurant.bind(this)} />
           </Route>
+          <Route path="/restaurant/:id/:referrerAddress">
+            <Restaurant
+              account={this.state.account}
+              restaurants={this.state.restaurants}
+              donationList={this.state.donationList}
+              donateRestaurant={this.donateRestaurant.bind(this)}
+              donateRestaurantWithReferrer={this.donateRestaurantWithReferrer.bind(this)}
+              getDonationLog={this.getDonationLog.bind(this)} />
+          </Route>
           <Route path="/restaurant/:id">
             <Restaurant
+              account={this.state.account}
               restaurants={this.state.restaurants}
               donationList={this.state.donationList}
               donateRestaurant={this.donateRestaurant.bind(this)}

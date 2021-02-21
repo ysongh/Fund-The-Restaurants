@@ -5,8 +5,8 @@ import $ from 'jquery';
 
 import DonationModal from './DonationModal';
 
-function Restaurant({ getDonationLog, donateRestaurant, restaurants, donationList }){
-  const { id } =  useParams();
+function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, donateRestaurantWithReferrer, donationList }){
+  const { id, referrerAddress } =  useParams();
 
   useEffect(() => {
     async function fetchData() {
@@ -36,7 +36,7 @@ function Restaurant({ getDonationLog, donateRestaurant, restaurants, donationLis
                 </h5>
                 <button
                   className="btn secondary-bg-color"
-                  onClick={() => {navigator.clipboard.writeText(`${window.location.origin}/restaurant/${id}`)}}
+                  onClick={() => {navigator.clipboard.writeText(`${window.location.origin}/restaurant/${id}/${account}`)}}
                   data-toggle="tooltip"
                   data-placement="right"
                   data-trigger="focus"
@@ -93,9 +93,11 @@ function Restaurant({ getDonationLog, donateRestaurant, restaurants, donationLis
       <DonationModal
         getDonationLog={getDonationLog}
         donateRestaurant={donateRestaurant}
+        donateRestaurantWithReferrer={donateRestaurantWithReferrer}
         id={id}
         imageURL={restaurants[id - 1]?.imageURL}
-        restaurantName={restaurants[id - 1]?.name} />
+        restaurantName={restaurants[id - 1]?.name}
+        referrerAddress={referrerAddress} />
     </div>
   )
 }
