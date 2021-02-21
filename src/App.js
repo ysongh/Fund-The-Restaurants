@@ -160,7 +160,7 @@ class App extends Component{
   render(){
     return (
       <Router className="App">
-        <Navbar />
+        <Navbar account={this.state.account} />
         <Switch>
           <Route path="/mytokens">
             <MyTokens tokens={this.state.tokens} />
