@@ -28,7 +28,7 @@ function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, do
         <div className="col-12 col-md-6 col-lg-4 mb-3">
           <div className="card">
             <div className="card-body">
-              <img className="card-img-top mb-3" src={restaurants[id - 1]?.imageURL} alt="Restaurant" />
+              <img className="card-img-top mb-3" src={`https://ipfs.infura.io/ipfs/${restaurants[id - 1]?.imageURL}`} alt="Restaurant" />
               
               <div className="d-flex justify-content-between align-items-center">
                 <h5 className="card-title">

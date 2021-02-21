@@ -15,7 +15,7 @@ function MyTokens({ tokens }){
                     <span className="badge badge-warning text-center">{token.name}</span>
                   </center>
                   
-                  <img className="img-rounded" src={token.tokenURI} alt="NFT" />
+                  <img className="img-rounded" src={`https://ipfs.infura.io/ipfs/${token.tokenURI}`} alt="NFT" />
 
                   <center>
                     {token.amount.toString() != '0' ? (

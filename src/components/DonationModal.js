@@ -60,7 +60,8 @@ function DonationModal({ getDonationLog, donateRestaurant, donateRestaurantWithR
                   <h2 className="text-center mb-3">You Earn NFT!</h2>
                   <div className="card" style={{ background: `rgb(${nft.red}, ${nft.green}, ${nft.blue})`}}>
                     <div className="card-body px-4">
-                      <img className="img-rounded" src={nft.tokenURI} alt="NFT" />
+                      
+                      <img className="img-rounded" src={`https://ipfs.infura.io/ipfs/${nft.tokenURI}`} alt="NFT" />
                     </div>
                   </div>
                 </>

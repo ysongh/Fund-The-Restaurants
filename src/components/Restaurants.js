@@ -25,7 +25,7 @@ function Restaurants({ restaurants }){
                     <Link className="btn primary-bg-color" to={`/restaurant/${restaurant.restaurantId}`}>View</Link>
                   </div>
                   <p>{restaurant.location}</p>
-                  <img className="card-img-top" src={restaurant.imageURL} alt="Restaurant" />
+                  <img className="card-img-top" src={`https://ipfs.infura.io/ipfs/${restaurant.imageURL}`} alt="Restaurant" />
                   <span className="badge badge-secondary donation-needed">Need {window.web3.utils.fromWei(restaurant.donationNeeded.toString(), 'Ether')} BNB</span>
                 </div>
               </div>

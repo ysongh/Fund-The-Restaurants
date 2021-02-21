@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import ipfsClient from 'ipfs-http-client';
 
 import Spinner from './common/Spinner';
+
+const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
 
 function AddRestaurant({ createRestaurant }){
   const history = useHistory();
@@ -12,19 +15,38 @@ function AddRestaurant({ createRestaurant }){
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
+  const [filename, setFilename] = useState('None');
+  const [buffer, setBuffer] = useState('');
 
   async function addRestaurant(){
     try{
       setLoading(true);
-      await createRestaurant(name, location, imageURL, description, amount);
-      
-      history.push('/');
+
+      ipfs.add(buffer, async (error, result) => {
+        if(error) {
+          console.error(error);
+        }
+        await createRestaurant(name, location, result[0].hash, description, amount);
+        history.push('/');
+        setLoading(false);
+      });
     }
     catch(err){
       console.error(err);
       setLoading(false);
     }
-    
+  }
+
+  const getFile = e => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    const reader = new window.FileReader();
+
+    reader.readAsArrayBuffer(file);
+    reader.onloadend = () => {
+      setFilename(file.name);
+      setBuffer(Buffer(reader.result));
+    }
   }
 
   return(
@@ -61,14 +83,9 @@ function AddRestaurant({ createRestaurant }){
 
               <div className="d-flex justify-content-between">
                 <div className="form-group">
-                  <label>Image URL</label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    name="imageURL"
-                    value={imageURL}
-                    onChange={(e) => setImageURL(e.target.value)} 
-                  />
+                  <label>File</label>
+                  <input className="text-white text-monospace" type="file" onChange={getFile} />
+                  <p>{filename}</p>
                 </div>
 
                 <div className="form-group">
