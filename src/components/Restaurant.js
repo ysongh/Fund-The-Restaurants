@@ -18,7 +18,7 @@ function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, do
     })
 
     fetchData();
-  }, [])
+  }, [id])
 
   return(
     <div className="container">

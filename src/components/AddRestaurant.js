@@ -11,7 +11,6 @@ function AddRestaurant({ createRestaurant }){
 
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
-  const [imageURL, setImageURL] = useState('');
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);

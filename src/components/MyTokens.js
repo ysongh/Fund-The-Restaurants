@@ -18,7 +18,7 @@ function MyTokens({ tokens }){
                   <img className="img-rounded" src={`https://ipfs.infura.io/ipfs/${token.tokenURI}`} alt="NFT" />
 
                   <center>
-                    {token.amount.toString() != '0' ? (
+                    {token.amount.toString() !== '0' ? (
                       <span className="badge secondary-bg-color">
                         Donate {window.web3.utils.fromWei(token.amount.toString(), 'Ether')} BNB
                       </span>
