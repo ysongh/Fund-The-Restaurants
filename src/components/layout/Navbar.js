@@ -7,7 +7,7 @@ function Navbar({ account }){
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <Link className="navbar-brand text-secondary-color" to="/">
-            Fund My Restaurants
+          <img className="logo" src="/images/logo.png" alt="Logo" />
         </Link>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>

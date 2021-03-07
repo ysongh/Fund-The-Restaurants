@@ -10,6 +10,10 @@
     padding: 10px;
 }
 
+.logo {
+ width: 125px;
+}
+
 .icon {
     width: 50px;
     display: block;
