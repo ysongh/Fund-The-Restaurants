@@ -4,6 +4,7 @@ import Web3 from 'web3';
 
 import './App.css';
 import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
 import RestaurantsBlockchain from './abis/Restaurants.json';
 import Restaurants from './components/Restaurants';
 import Restaurant from './components/Restaurant';
@@ -195,6 +196,7 @@ class App extends Component{
             <Restaurants restaurants={this.state.restaurants} />
           </Route>
         </Switch>
+        <Footer />
       </Router>
     );
   }
