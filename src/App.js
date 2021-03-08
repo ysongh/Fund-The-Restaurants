@@ -161,6 +161,11 @@ class App extends Component{
     return (
       <Router className="App">
         <Navbar account={this.state.account} />
+        <div className="alert alert-info" role="alert">
+          <p className="text-center m-0">
+            Contract currently works on the Kovan Test Network
+          </p>
+        </div>
         <Switch>
           <Route path="/mytokens">
             <MyTokens tokens={this.state.tokens} />
