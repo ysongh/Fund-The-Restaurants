@@ -1,13 +1,22 @@
 pragma solidity ^0.6.12;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "./AggregatorV3Interface.sol";
 
 contract Restaurants is ERC721 {
   uint public restaurantCount = 0;
   mapping(uint => Restaurant) public restaurants;
   mapping(uint => NFT) public nft;
+  AggregatorV3Interface internal priceFeed;
 
-  constructor() ERC721("FundRestaurantsToken", "FRT") public {}
+  /**
+   * Network: Kovan
+   * Aggregator: ETH/USD
+   * Address: 0x9326BFA02ADD2366b30bacB125260Af641031331
+   */
+  constructor() ERC721("FundRestaurantsToken", "FRT") public {
+    priceFeed = AggregatorV3Interface(0x9326BFA02ADD2366b30bacB125260Af641031331);
+  }
 
   struct Restaurant {
     uint restaurantId;
@@ -109,5 +118,16 @@ contract Restaurants is ERC721 {
 
   function getRandomValue(uint mod) internal view returns(uint) {
     return uint(keccak256(abi.encodePacked(now, block.difficulty, msg.sender))) % mod;
+  }
+
+  function getLatestPrice() public view returns (int) {
+    (
+      uint80 roundID, 
+      int price,
+      uint startedAt,
+      uint timeStamp,
+      uint80 answeredInRound
+    ) = priceFeed.latestRoundData();
+    return price;
   }
 }
