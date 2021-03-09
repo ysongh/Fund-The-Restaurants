@@ -158,6 +158,11 @@ class App extends Component{
     this.setState({ donationList: transactions?.filter(transaction => transaction.returnValues.restaurantId === restaurantId ) });
   }
 
+  async getPrice(){
+    const ethPrice = await this.state.restaurantsBlockchain.methods.getLatestPrice().call()
+    return ethPrice;
+  }
+
   render(){
     return (
       <Router className="App">
@@ -182,7 +187,8 @@ class App extends Component{
               donationList={this.state.donationList}
               donateRestaurant={this.donateRestaurant.bind(this)}
               donateRestaurantWithReferrer={this.donateRestaurantWithReferrer.bind(this)}
-              getDonationLog={this.getDonationLog.bind(this)} />
+              getDonationLog={this.getDonationLog.bind(this)}
+              getPrice={this.getPrice.bind(this)} />
           </Route>
           <Route path="/restaurant/:id">
             <Restaurant
@@ -190,7 +196,8 @@ class App extends Component{
               restaurants={this.state.restaurants}
               donationList={this.state.donationList}
               donateRestaurant={this.donateRestaurant.bind(this)}
-              getDonationLog={this.getDonationLog.bind(this)} />
+              getDonationLog={this.getDonationLog.bind(this)}
+              getPrice={this.getPrice.bind(this)} />
           </Route>
           <Route path="/">
             <Restaurants restaurants={this.state.restaurants} />

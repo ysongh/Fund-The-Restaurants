@@ -3,11 +3,12 @@ import Confetti from 'react-confetti'
 
 import Spinner from './common/Spinner';
 
-function DonationModal({ getDonationLog, donateRestaurant, donateRestaurantWithReferrer, id, imageURL, restaurantName, referrerAddress}){
+function DonationModal({ getDonationLog, donateRestaurant, donateRestaurantWithReferrer, id, imageURL, restaurantName, referrerAddress, getPrice}){
   const [amount, setAmount] = useState('');
   const [showAward, setShowAward] = useState(false);
   const [nft, setNFT] = useState({});
   const [loading, setLoading] = useState(false);
+  const [price, setPrice] = useState(0);
   
   async function donate(){
     try{
@@ -31,13 +32,20 @@ function DonationModal({ getDonationLog, donateRestaurant, donateRestaurantWithR
     }
   }
 
+  const handleAmount = async e => {
+    setAmount(e.target.value);
+    const usdValue = await getPrice();
+    let totalUSDValue = (usdValue * e.target.value) / 100000000;
+    setPrice(Number.parseFloat(totalUSDValue).toFixed(2));
+  }
+
   return(
     <div className="container my-5">
       <div className="modal fade" id="donationModal" tabIndex="-1" role="dialog">
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Donate BNB</h5>
+              <h5 className="modal-title">Donate ETH</h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -47,13 +55,19 @@ function DonationModal({ getDonationLog, donateRestaurant, donateRestaurantWithR
               { !showAward ? (
                 <div className="form-group mt-3 mb-4">
                   <label className="text-muted font-weight-bold" htmlFor="text">Amount</label>
-                  <input
-                      className="form-control"
-                      name="Amount"
-                      type="number"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)} 
-                  />
+                  <div class="input-group mb-3">
+                    <input
+                        className="form-control"
+                        name="Amount"
+                        type="number"
+                        value={amount}
+                        onChange={(e) => handleAmount(e)} 
+                    />
+                    <div className="input-group-append">
+                      <span className="input-group-text">ETH</span>
+                    </div>
+                  </div>
+                  <p className="lead">${price}</p>
                 </div>
               ) : (
                 <>
