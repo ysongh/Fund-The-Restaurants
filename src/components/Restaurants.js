@@ -26,7 +26,7 @@ function Restaurants({ restaurants }){
                   </div>
                   <p>{restaurant.location}</p>
                   <img className="card-img-top" src={`https://ipfs.infura.io/ipfs/${restaurant.imageURL}`} alt="Restaurant" />
-                  <span className="badge badge-secondary donation-needed">Need {window.web3.utils.fromWei(restaurant.donationNeeded.toString(), 'Ether')} BNB</span>
+                  <span className="badge badge-secondary donation-needed">Need {window.web3.utils.fromWei(restaurant.donationNeeded.toString(), 'Ether')} ETH</span>
                 </div>
               </div>
             </div>

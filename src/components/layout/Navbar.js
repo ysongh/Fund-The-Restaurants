@@ -30,7 +30,7 @@ function Navbar({ account }){
                 target="_blank"
                 className="nav-link text-primary-color"
                 rel="noopener noreferrer"
-                href={"https://testnet.bscscan.com/address/" + account}>
+                href={"https://kovan.etherscan.io/address/" + account}>
                 {account.substring(0,8)}...{account.substring(34,42)}
               </a>
               {account &&

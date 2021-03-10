@@ -32,7 +32,7 @@ function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, do
               
               <div className="d-flex justify-content-between align-items-center">
                 <h5 className="card-title">
-                  Need {restaurants[id - 1] && window.web3.utils.fromWei(restaurants[id - 1].donationNeeded.toString(), 'Ether')} BNB
+                  Need {restaurants[id - 1] && window.web3.utils.fromWei(restaurants[id - 1].donationNeeded.toString(), 'Ether')} ETH
                 </h5>
                 <button
                   className="btn secondary-bg-color"

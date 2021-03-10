@@ -70,7 +70,7 @@ class App extends Component{
         }
       }
     }else{
-      window.alert('Contract is not deployed to detected network')
+      window.alert('Contract is not deployed to detected network.  Try Kovan Test Network')
     }
   }
 

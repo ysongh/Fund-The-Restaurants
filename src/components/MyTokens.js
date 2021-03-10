@@ -20,7 +20,7 @@ function MyTokens({ tokens }){
                   <center>
                     {token.amount.toString() !== '0' ? (
                       <span className="badge secondary-bg-color">
-                        Donate {window.web3.utils.fromWei(token.amount.toString(), 'Ether')} BNB
+                        Donate {window.web3.utils.fromWei(token.amount.toString(), 'Ether')} ETH
                       </span>
                     ) : (
                       <span className="badge secondary-bg-color">
