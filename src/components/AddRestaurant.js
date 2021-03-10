@@ -80,10 +80,13 @@ function AddRestaurant({ createRestaurant }){
                 />
               </div>
               <div className="form-group">
-                <label>File</label>
-                <br />
-                <input className="text-white text-monospace" type="file" onChange={getFile} />
-                <p>{filename && filename}</p>
+                <label>Image of your restarurant</label>
+                <div className="input-group">
+                  <div className="custom-file">
+                    <input type="file" className="custom-file-input" onChange={getFile} />
+                    <label className="custom-file-label">{filename ? filename : "Choose file"}</label>
+                  </div>
+                </div>
               </div>
 
               <div className="form-group">
