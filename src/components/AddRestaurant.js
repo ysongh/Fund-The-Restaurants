@@ -6,7 +6,7 @@ import Spinner from './common/Spinner';
 
 const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
 
-function AddRestaurant({ createRestaurant }){
+function AddRestaurant({ createRestaurant, getPrice }){
   const history = useHistory();
 
   const [name, setName] = useState('');
@@ -16,6 +16,7 @@ function AddRestaurant({ createRestaurant }){
   const [loading, setLoading] = useState(false);
   const [filename, setFilename] = useState('');
   const [buffer, setBuffer] = useState('');
+  const [price, setPrice] = useState(0);
 
   async function addRestaurant(){
     try{
@@ -48,8 +49,15 @@ function AddRestaurant({ createRestaurant }){
     }
   }
 
+  const handleAmount = async e => {
+    setAmount(e.target.value);
+    const usdValue = await getPrice();
+    let totalUSDValue = (usdValue * e.target.value) / 100000000;
+    setPrice(Number.parseFloat(totalUSDValue).toFixed(2));
+  }
+
   return(
-    <div className="container">
+    <div className="addRestaurant container">
       <div className="row">
         <div className="col-12 col-md-6 col-lg-5 m-auto">
           
@@ -91,13 +99,21 @@ function AddRestaurant({ createRestaurant }){
 
               <div className="form-group">
                 <label>Amount</label>
-                <input
-                  className="form-control"
-                  type="number"
-                  name="amount"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)} 
-                />
+                <div className="d-flex align-items-center">
+                  <div className="input-group mb-3 w-50">
+                    <input
+                      className="form-control "
+                      type="number"
+                      name="amount"
+                      value={amount}
+                      onChange={(e) => handleAmount(e)} 
+                    />
+                    <div className="input-group-append">
+                      <span className="input-group-text">ETH</span>
+                    </div>
+                  </div>
+                  <p className="addRestaurant__price w-50 text-right">${price}</p>
+                </div>
               </div>
 
               <div className="form-group">

@@ -10,7 +10,7 @@ function Restaurants({ restaurants, ethPrice }){
     <div className="container">
       <div className="jumbotron my-3">
         <h1 className="">Support these restaurants</h1>
-        <p className="lead">You can help them by donating some BNB and earn NFT</p>
+        <p className="lead">You can help them by donating some ETH and earn NFT</p>
         <hr className="my-4"></hr>
         <p>If you are an restaurant owner that need funds, you can fill out the form to create a post</p>
         <p className="lead">

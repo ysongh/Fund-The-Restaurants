@@ -182,7 +182,8 @@ class App extends Component{
           </Route>
           <Route path="/add-restaurant">
             <AddRestaurant
-              createRestaurant={this.createRestaurant.bind(this)} />
+              createRestaurant={this.createRestaurant.bind(this)}
+              getPrice={this.getPrice.bind(this)} />
           </Route>
           <Route path="/restaurant/:id/:referrerAddress">
             <Restaurant
