@@ -5,7 +5,7 @@ import $ from 'jquery';
 
 import DonationModal from './DonationModal';
 
-function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, donateRestaurantWithReferrer, donationList, getPrice }){
+function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, donateRestaurantWithReferrer, donationList, getPrice, ethPrice }){
   const { id, referrerAddress } =  useParams();
 
   useEffect(() => {
@@ -20,6 +20,20 @@ function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, do
     fetchData();
   }, [id])
 
+  const getUSDValue = () => {
+    let totalUSDValue = 0;
+
+    if(restaurants[id - 1]?.donationNeeded){
+      totalUSDValue = (ethPrice * +window.web3.utils.fromWei(restaurants[id - 1]?.donationNeeded, 'Ether')) / 100000000;
+    }
+
+    return (
+      <h5 className="card-title">
+        Need ${Number.parseFloat(totalUSDValue).toFixed(2)}
+      </h5>
+    )
+  }
+
   return(
     <div className="container">
       <h1 className="my-3">Restaurant Detail</h1>
@@ -31,9 +45,7 @@ function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, do
               <img className="card-img-top mb-3" src={`https://ipfs.infura.io/ipfs/${restaurants[id - 1]?.imageURL}`} alt="Restaurant" />
               
               <div className="d-flex justify-content-between align-items-center">
-                <h5 className="card-title">
-                  Need {restaurants[id - 1] && window.web3.utils.fromWei(restaurants[id - 1].donationNeeded.toString(), 'Ether')} ETH
-                </h5>
+                {getUSDValue()}
                 <button
                   className="btn secondary-bg-color"
                   onClick={() => {navigator.clipboard.writeText(`${window.location.origin}/restaurant/${id}/${account}`)}}
@@ -78,7 +90,7 @@ function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, do
                             <td>{key + 1}</td>
                             <td>{moment.unix(transaction.returnValues.date).format('M/D/Y h:mm:ss A')}</td>
                             <td>{transaction.returnValues.from.substring(0, 7)}...{transaction.returnValues.from.substring(35, 42)}</td>
-                            <td>{window.web3.utils.fromWei(transaction.returnValues.amount, 'ether')}</td>
+                            <td>{window.web3.utils.fromWei(transaction.returnValues.amount, 'ether')} ETH</td>
                           </tr>
                         )
                       }) }

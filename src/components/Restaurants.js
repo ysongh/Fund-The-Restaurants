@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; 
 
-function Restaurants({ restaurants }){
+function Restaurants({ restaurants, ethPrice }){
+  const getUSDValue = restaurant => {
+    const totalUSDValue = (ethPrice * +window.web3.utils.fromWei(restaurant.donationNeeded.toString(), 'Ether')) / 100000000;
+    return <span className="badge badge-secondary donation-needed">Need ${Number.parseFloat(totalUSDValue).toFixed(2)}</span>
+  }
   return(
     <div className="container">
       <div className="jumbotron my-3">
@@ -26,7 +30,7 @@ function Restaurants({ restaurants }){
                   </div>
                   <p>{restaurant.location}</p>
                   <img className="card-img-top" src={`https://ipfs.infura.io/ipfs/${restaurant.imageURL}`} alt="Restaurant" />
-                  <span className="badge badge-secondary donation-needed">Need {window.web3.utils.fromWei(restaurant.donationNeeded.toString(), 'Ether')} ETH</span>
+                  {getUSDValue(restaurant)}
                 </div>
               </div>
             </div>

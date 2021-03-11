@@ -19,13 +19,17 @@ class App extends Component{
     restaurantsBlockchain: null,
     restaurants: [],
     donationList: [],
-    tokens: []
+    tokens: [],
+    ethPrice: 0
   }
 
   async componentWillMount(){
     await this.loadWeb3();
     await this.loadBlockchainData();
     await this.getRestaurant();
+
+    const ethValue = await this.getPrice();
+    this.setState({ ethPrice: ethValue });
   }
 
   async loadBlockchainData(){
@@ -197,10 +201,11 @@ class App extends Component{
               donationList={this.state.donationList}
               donateRestaurant={this.donateRestaurant.bind(this)}
               getDonationLog={this.getDonationLog.bind(this)}
-              getPrice={this.getPrice.bind(this)} />
+              getPrice={this.getPrice.bind(this)}
+              ethPrice={this.state.ethPrice} />
           </Route>
           <Route path="/">
-            <Restaurants restaurants={this.state.restaurants} />
+            <Restaurants restaurants={this.state.restaurants} ethPrice={this.state.ethPrice}/>
           </Route>
         </Switch>
         <Footer />
