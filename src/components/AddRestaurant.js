@@ -22,14 +22,21 @@ function AddRestaurant({ createRestaurant, getPrice }){
     try{
       setLoading(true);
 
-      ipfs.add(buffer, async (error, result) => {
-        if(error) {
-          console.error(error);
-        }
-        await createRestaurant(name, location, result[0].hash, description, amount);
+      if(buffer){
+        ipfs.add(buffer, async (error, result) => {
+          if(error) {
+            console.error(error);
+          }
+          await createRestaurant(name, location, result[0].hash, description, amount);
+          history.push('/');
+        });
+      }
+      else{
+        await createRestaurant(name, location, '', description, amount);
         history.push('/');
-        setLoading(false);
-      });
+      }
+
+      setLoading(false);
     }
     catch(err){
       console.error(err);
