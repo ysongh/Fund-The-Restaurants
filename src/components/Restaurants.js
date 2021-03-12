@@ -29,7 +29,10 @@ function Restaurants({ restaurants, ethPrice }){
                     <Link className="btn primary-bg-color" to={`/restaurant/${restaurant.restaurantId}`}>View</Link>
                   </div>
                   <p>{restaurant.location}</p>
-                  <img className="card-img-top" src={`https://ipfs.infura.io/ipfs/${restaurant.imageURL}`} alt="Restaurant" />
+                  <img
+                    className="card-img-top"
+                    src={restaurant.imageURL ? `https://ipfs.infura.io/ipfs/${restaurant.imageURL}` : '/images/no-image.png'}
+                    alt="Restaurant" />
                   {getUSDValue(restaurant)}
                 </div>
               </div>
