@@ -3,7 +3,7 @@ import Confetti from 'react-confetti'
 
 import Spinner from './common/Spinner';
 
-function DonationModal({ getDonationLog, donateRestaurant, donateRestaurantWithReferrer, id, imageURL, restaurantName, referrerAddress, getPrice}){
+function DonationModal({ getDonationLog, donateRestaurant, donateRestaurantWithReferrer, id, imageURL, restaurantName, referrerAddress, getPrice, currentNetwork }){
   const [amount, setAmount] = useState('');
   const [showAward, setShowAward] = useState(false);
   const [nft, setNFT] = useState({});
@@ -45,7 +45,7 @@ function DonationModal({ getDonationLog, donateRestaurant, donateRestaurantWithR
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Donate ETH</h5>
+              <h5 className="modal-title">Donate {currentNetwork}</h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

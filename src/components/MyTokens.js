@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MyTokens({ tokens }){
+function MyTokens({ tokens, currentNetwork }){
   return(
     <div className="container">
       <h1 className="my-3">My Tokens</h1>
@@ -20,7 +20,7 @@ function MyTokens({ tokens }){
                   <center>
                     {token.amount.toString() !== '0' ? (
                       <span className="badge secondary-bg-color">
-                        Donate {window.web3.utils.fromWei(token.amount.toString(), 'Ether')} ETH
+                        Donate {window.web3.utils.fromWei(token.amount.toString(), 'Ether')} {currentNetwork}
                       </span>
                     ) : (
                       <span className="badge secondary-bg-color">

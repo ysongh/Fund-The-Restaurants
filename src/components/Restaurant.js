@@ -5,7 +5,7 @@ import $ from 'jquery';
 
 import DonationModal from './DonationModal';
 
-function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, donateRestaurantWithReferrer, donationList, getPrice, ethPrice }){
+function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, donateRestaurantWithReferrer, donationList, getPrice, ethPrice, currentNetwork }){
   const { id, referrerAddress } =  useParams();
 
   useEffect(() => {
@@ -113,7 +113,8 @@ function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, do
         imageURL={restaurants[id - 1]?.imageURL}
         restaurantName={restaurants[id - 1]?.name}
         referrerAddress={referrerAddress}
-        getPrice={getPrice} />
+        getPrice={getPrice}
+        currentNetwork={currentNetwork} />
     </div>
   )
 }

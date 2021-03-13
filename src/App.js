@@ -20,7 +20,8 @@ class App extends Component{
     restaurants: [],
     donationList: [],
     tokens: [],
-    ethPrice: 0
+    ethPrice: 0,
+    currentNetwork: "ETH"
   }
 
   async componentWillMount(){
@@ -39,6 +40,9 @@ class App extends Component{
     this.setState({ account: accounts[0] });
 
     const networkId = await web3.eth.net.getId();
+    
+    if(networkId === 80001) this.setState({ currentNetwork: 'MATIC' });
+
     const networkData = RestaurantsBlockchain.networks[networkId];
 
     if(networkData){
@@ -173,17 +177,18 @@ class App extends Component{
         <Navbar account={this.state.account} />
         <div className="alert alert-info" role="alert">
           <p className="text-center m-0">
-            Contract currently works on the Kovan Test Network
+            Contract currently works on the Kovan and Matic Mumbai Test Network
           </p>
         </div>
         <Switch>
           <Route path="/mytokens">
-            <MyTokens tokens={this.state.tokens} />
+            <MyTokens tokens={this.state.tokens} currentNetwork={this.state.currentNetwork} />
           </Route>
           <Route path="/add-restaurant">
             <AddRestaurant
               createRestaurant={this.createRestaurant.bind(this)}
-              getPrice={this.getPrice.bind(this)} />
+              getPrice={this.getPrice.bind(this)}
+              currentNetwork={this.state.currentNetwork} />
           </Route>
           <Route path="/restaurant/:id/:referrerAddress">
             <Restaurant
@@ -193,7 +198,8 @@ class App extends Component{
               donateRestaurant={this.donateRestaurant.bind(this)}
               donateRestaurantWithReferrer={this.donateRestaurantWithReferrer.bind(this)}
               getDonationLog={this.getDonationLog.bind(this)}
-              getPrice={this.getPrice.bind(this)} />
+              getPrice={this.getPrice.bind(this)}
+              currentNetwork={this.state.currentNetwork} />
           </Route>
           <Route path="/restaurant/:id">
             <Restaurant
@@ -203,10 +209,14 @@ class App extends Component{
               donateRestaurant={this.donateRestaurant.bind(this)}
               getDonationLog={this.getDonationLog.bind(this)}
               getPrice={this.getPrice.bind(this)}
-              ethPrice={this.state.ethPrice} />
+              ethPrice={this.state.ethPrice}
+              currentNetwork={this.state.currentNetwork} />
           </Route>
           <Route path="/">
-            <Restaurants restaurants={this.state.restaurants} ethPrice={this.state.ethPrice}/>
+            <Restaurants
+              restaurants={this.state.restaurants}
+              ethPrice={this.state.ethPrice}
+              currentNetwork={this.state.currentNetwork} />
           </Route>
         </Switch>
         <Footer />

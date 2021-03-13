@@ -6,7 +6,7 @@ import Spinner from './common/Spinner';
 
 const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
 
-function AddRestaurant({ createRestaurant, getPrice }){
+function AddRestaurant({ createRestaurant, getPrice, currentNetwork }){
   const history = useHistory();
 
   const [name, setName] = useState('');
@@ -116,7 +116,7 @@ function AddRestaurant({ createRestaurant, getPrice }){
                       onChange={(e) => handleAmount(e)} 
                     />
                     <div className="input-group-append">
-                      <span className="input-group-text">ETH</span>
+                      <span className="input-group-text">{currentNetwork}</span>
                     </div>
                   </div>
                   <p className="addRestaurant__price w-50 text-right">${price}</p>
