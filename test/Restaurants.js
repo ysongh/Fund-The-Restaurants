@@ -52,6 +52,15 @@ contract('Restaurants', ([deployer, account1, account2, account3]) => {
             assert.notEqual(event.date, null, "Date is not null");
             assert.equal(event.donationNeeded, restaurantDonationNeeded, 'Donation needed is correct');
             assert.equal(event.owner, account1, 'Owner is correct');
+
+            // reject if donation needed is 0
+            await restaurants.createRestaurant(restaurantName, restaurantDescription, restaurantLocation, restaurantImageURL, 0, { from: account1 }).should.be.rejected;
+            // reject if name is empty
+            await restaurants.createRestaurant("", restaurantDescription, restaurantLocation, restaurantImageURL, restaurantDonationNeeded, { from: account1 }).should.be.rejected;
+            // reject if description is empty
+            await restaurants.createRestaurant(restaurantName, "", restaurantLocation, restaurantImageURL, restaurantDonationNeeded, { from: account1 }).should.be.rejected;
+            // reject if location is empty
+            await restaurants.createRestaurant(restaurantName, restaurantDescription, "", restaurantImageURL, restaurantDonationNeeded, { from: account1 }).should.be.rejected;
         });
 
         it('has correct restaurant count', async() => {

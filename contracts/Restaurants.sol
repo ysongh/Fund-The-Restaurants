@@ -57,11 +57,16 @@ contract Restaurants is ERC721 {
     address payable owner
   );
 
-  function createRestaurant(string memory _name, string memory _description, string memory _location, string memory _imageURL, uint donationNeeded) public {
+  function createRestaurant(string memory _name, string memory _description, string memory _location, string memory _imageURL, uint _donationNeeded) public {
+    require(_donationNeeded > 0);
+    require(bytes(_name).length > 0);
+    require(bytes(_description).length > 0);
+    require(bytes(_location).length > 0);
+    
     restaurantCount++;
 
-    restaurants[restaurantCount] = Restaurant(restaurantCount, _name, _description, _location, _imageURL, donationNeeded, now, msg.sender);
-    emit RestaurantCreated(restaurantCount, _name, _description, _location, _imageURL, donationNeeded, now, msg.sender);
+    restaurants[restaurantCount] = Restaurant(restaurantCount, _name, _description, _location, _imageURL, _donationNeeded, now, msg.sender);
+    emit RestaurantCreated(restaurantCount, _name, _description, _location, _imageURL, _donationNeeded, now, msg.sender);
   }
 
   function donateETHToRestaurant(uint _restaurantId, string memory _tokenURI) public payable {
