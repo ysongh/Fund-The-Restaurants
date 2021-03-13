@@ -14,8 +14,13 @@ contract Restaurants is ERC721 {
    * Aggregator: ETH/USD
    * Address: 0x9326BFA02ADD2366b30bacB125260Af641031331
    */
+  /**
+   * Network: Mumbai Testnet
+   * Aggregator: MATIC/USD
+   * Address: 0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada
+   */
   constructor() ERC721("FundRestaurantsToken", "FRT") public {
-    priceFeed = AggregatorV3Interface(0x9326BFA02ADD2366b30bacB125260Af641031331);
+    priceFeed = AggregatorV3Interface(0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada);
   }
 
   struct Restaurant {
@@ -62,7 +67,7 @@ contract Restaurants is ERC721 {
     require(bytes(_name).length > 0);
     require(bytes(_description).length > 0);
     require(bytes(_location).length > 0);
-    
+
     restaurantCount++;
 
     restaurants[restaurantCount] = Restaurant(restaurantCount, _name, _description, _location, _imageURL, _donationNeeded, now, msg.sender);
