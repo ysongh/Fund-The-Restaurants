@@ -4,11 +4,17 @@ import Identicon from 'identicon.js';
 
 import { GlobalContext } from '../../context/GlobalState';
 
-function Navbar({ account, currentNetwork }){
-  const { walletAddress } = useContext(GlobalContext);
-  console.log(walletAddress);
+function Navbar({ connectToBlockchain, currentNetwork }){
+  const { walletAddress, setWalletAddress } = useContext(GlobalContext);
+
+  const handleConnect = async () => {
+    await connectToBlockchain();
+    const accounts = await window.web3.eth.getAccounts();
+    setWalletAddress(accounts[0]);
+  }
+
   return(
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-md navbar-light bg-light">
       <div className="container">
         <Link className="navbar-brand text-secondary-color" to="/">
           <img className="logo" src="/images/logo.png" alt="Logo" />
@@ -21,28 +27,33 @@ function Navbar({ account, currentNetwork }){
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
               <Link className="nav-link text-primary-color" to="/">Home</Link>
             </li>
-            <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-              <Link className="nav-link text-primary-color" to="/mytokens">My Tokens</Link>
-            </li>
-            <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-              <Link className="nav-link text-primary-color" to="/add-restaurant">Add Restaurants</Link>
-            </li>
+            {walletAddress &&
+              <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                <Link className="nav-link text-primary-color" to="/mytokens">My Tokens</Link>
+              </li>
+            }
+            {walletAddress &&
+              <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                <Link className="nav-link text-primary-color" to="/add-restaurant">Add Restaurants</Link>
+              </li>
+            }
           </ul>
           <ul className="navbar-nav">
             <li className="nav-item d-flex" data-toggle="collapse" data-target=".navbar-collapse.show">
-              <a
+              {walletAddress ? <a
                 target="_blank"
                 className="nav-link text-primary-color"
                 rel="noopener noreferrer"
-                href={currentNetwork === 'MATIC' ? "https://explorer-mumbai.maticvigil.com/address/" + account : "https://kovan.etherscan.io/address/" + account}>
-                {account.substring(0,8)}...{account.substring(34,42)}
-              </a>
-              {account &&
+                href={currentNetwork === 'MATIC' ? "https://explorer-mumbai.maticvigil.com/address/" + walletAddress : "https://kovan.etherscan.io/address/" + walletAddress}>
+                {walletAddress.substring(0,8)}...{walletAddress.substring(34,42)}
+              </a> : <button className="btn secondary-bg-color" onClick={() => handleConnect()}>Open Wallet</button>
+              }
+              {walletAddress && 
                 <img
                   className="mt-1"
                   width='35'
                   height='35'
-                  src={`data:image/png;base64,${new Identicon(account, 30).toString()}`}
+                  src={`data:image/png;base64,${new Identicon(walletAddress, 30).toString()}`}
                   alt="Icon" />
               }
             </li>

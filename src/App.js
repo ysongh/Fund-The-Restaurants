@@ -25,7 +25,7 @@ class App extends Component{
     currentNetwork: "ETH"
   }
 
-  async componentWillMount(){
+  async connectToBlockchain(){
     await this.loadWeb3();
     await this.loadBlockchainData();
     await this.getRestaurant();
@@ -176,7 +176,7 @@ class App extends Component{
     return (
       <GlobalProvider>
         <Router className="App">
-          <Navbar account={this.state.account} currentNetwork={this.state.currentNetwork} />
+          <Navbar connectToBlockchain={this.connectToBlockchain.bind(this)} currentNetwork={this.state.currentNetwork} />
           <div className="alert alert-info" role="alert">
             <p className="text-center m-0">
               Contract currently works on the Kovan and Matic Mumbai Test Network
@@ -216,6 +216,7 @@ class App extends Component{
             </Route>
             <Route path="/">
               <Restaurants
+                connectToBlockchain={this.connectToBlockchain.bind(this)}
                 restaurants={this.state.restaurants}
                 ethPrice={this.state.ethPrice}
                 currentNetwork={this.state.currentNetwork} />

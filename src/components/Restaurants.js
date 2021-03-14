@@ -1,21 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'; 
 
-function Restaurants({ restaurants, ethPrice, currentNetwork }){
+import { GlobalContext } from '../context/GlobalState';
+
+function Restaurants({ connectToBlockchain, restaurants, ethPrice, currentNetwork }){
+  const { walletAddress, setWalletAddress } = useContext(GlobalContext);
+
+  const handleConnect = async () => {
+    await connectToBlockchain();
+    const accounts = await window.web3.eth.getAccounts();
+    setWalletAddress(accounts[0]);
+  }
+
   const getUSDValue = restaurant => {
     const totalUSDValue = (ethPrice * +window.web3.utils.fromWei(restaurant.donationNeeded.toString(), 'Ether')) / 100000000;
     return <span className="badge badge-secondary donation-needed">Need ${Number.parseFloat(totalUSDValue).toFixed(2)}</span>
   }
   return(
-    <div className="container">
+    <div className="container" style={{ minHeight: '65vh'}}>
       <div className="jumbotron my-3">
         <h1 className="">Support these restaurants</h1>
         <p className="lead">You can help them by donating some {currentNetwork} and earn NFT</p>
         <hr className="my-4"></hr>
         <p>If you are an restaurant owner that need funds, you can fill out the form to create a post</p>
-        <p className="lead">
+        {walletAddress ? <p className="lead">
           <Link className="btn primary-bg-color btn-lg" to="/add-restaurant" role="button">Get Started</Link>
-        </p>
+        </p> : <button className="btn secondary-bg-color btn-lg" onClick={() => handleConnect()}>Open Wallet</button>
+        }
       </div>
 
       <div className="row">
