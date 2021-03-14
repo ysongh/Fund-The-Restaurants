@@ -93,7 +93,7 @@ function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, do
                             <td>{key + 1}</td>
                             <td>{moment.unix(transaction.returnValues.date).format('M/D/Y h:mm:ss A')}</td>
                             <td>{transaction.returnValues.from.substring(0, 7)}...{transaction.returnValues.from.substring(35, 42)}</td>
-                            <td>{window.web3.utils.fromWei(transaction.returnValues.amount, 'ether')} ETH</td>
+                            <td>{window.web3.utils.fromWei(transaction.returnValues.amount, 'ether')} {currentNetwork}</td>
                           </tr>
                         )
                       }) }

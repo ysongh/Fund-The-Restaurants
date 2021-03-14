@@ -174,7 +174,7 @@ class App extends Component{
   render(){
     return (
       <Router className="App">
-        <Navbar account={this.state.account} />
+        <Navbar account={this.state.account} currentNetwork={this.state.currentNetwork} />
         <div className="alert alert-info" role="alert">
           <p className="text-center m-0">
             Contract currently works on the Kovan and Matic Mumbai Test Network

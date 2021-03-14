@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Identicon from 'identicon.js';
 
-function Navbar({ account }){
+function Navbar({ account, currentNetwork }){
   return(
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -30,7 +30,7 @@ function Navbar({ account }){
                 target="_blank"
                 className="nav-link text-primary-color"
                 rel="noopener noreferrer"
-                href={"https://kovan.etherscan.io/address/" + account}>
+                href={currentNetwork === 'MATIC' ? "https://explorer-mumbai.maticvigil.com/address/" + account : "https://kovan.etherscan.io/address/" + account}>
                 {account.substring(0,8)}...{account.substring(34,42)}
               </a>
               {account &&
