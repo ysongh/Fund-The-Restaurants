@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Link } from 'react-router-dom';
 import Identicon from 'identicon.js';
 
+import { GlobalContext } from '../../context/GlobalState';
+
 function Navbar({ account, currentNetwork }){
+  const { walletAddress } = useContext(GlobalContext);
+  console.log(walletAddress);
   return(
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">

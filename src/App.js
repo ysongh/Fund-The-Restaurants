@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route  } from 'react-router-dom';
 import Web3 from 'web3';
 
+import { GlobalProvider } from './context/GlobalState';
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -173,54 +174,56 @@ class App extends Component{
 
   render(){
     return (
-      <Router className="App">
-        <Navbar account={this.state.account} currentNetwork={this.state.currentNetwork} />
-        <div className="alert alert-info" role="alert">
-          <p className="text-center m-0">
-            Contract currently works on the Kovan and Matic Mumbai Test Network
-          </p>
-        </div>
-        <Switch>
-          <Route path="/mytokens">
-            <MyTokens tokens={this.state.tokens} currentNetwork={this.state.currentNetwork} />
-          </Route>
-          <Route path="/add-restaurant">
-            <AddRestaurant
-              createRestaurant={this.createRestaurant.bind(this)}
-              getPrice={this.getPrice.bind(this)}
-              currentNetwork={this.state.currentNetwork} />
-          </Route>
-          <Route path="/restaurant/:id/:referrerAddress">
-            <Restaurant
-              account={this.state.account}
-              restaurants={this.state.restaurants}
-              donationList={this.state.donationList}
-              donateRestaurant={this.donateRestaurant.bind(this)}
-              donateRestaurantWithReferrer={this.donateRestaurantWithReferrer.bind(this)}
-              getDonationLog={this.getDonationLog.bind(this)}
-              getPrice={this.getPrice.bind(this)}
-              currentNetwork={this.state.currentNetwork} />
-          </Route>
-          <Route path="/restaurant/:id">
-            <Restaurant
-              account={this.state.account}
-              restaurants={this.state.restaurants}
-              donationList={this.state.donationList}
-              donateRestaurant={this.donateRestaurant.bind(this)}
-              getDonationLog={this.getDonationLog.bind(this)}
-              getPrice={this.getPrice.bind(this)}
-              ethPrice={this.state.ethPrice}
-              currentNetwork={this.state.currentNetwork} />
-          </Route>
-          <Route path="/">
-            <Restaurants
-              restaurants={this.state.restaurants}
-              ethPrice={this.state.ethPrice}
-              currentNetwork={this.state.currentNetwork} />
-          </Route>
-        </Switch>
-        <Footer />
-      </Router>
+      <GlobalProvider>
+        <Router className="App">
+          <Navbar account={this.state.account} currentNetwork={this.state.currentNetwork} />
+          <div className="alert alert-info" role="alert">
+            <p className="text-center m-0">
+              Contract currently works on the Kovan and Matic Mumbai Test Network
+            </p>
+          </div>
+          <Switch>
+            <Route path="/mytokens">
+              <MyTokens tokens={this.state.tokens} currentNetwork={this.state.currentNetwork} />
+            </Route>
+            <Route path="/add-restaurant">
+              <AddRestaurant
+                createRestaurant={this.createRestaurant.bind(this)}
+                getPrice={this.getPrice.bind(this)}
+                currentNetwork={this.state.currentNetwork} />
+            </Route>
+            <Route path="/restaurant/:id/:referrerAddress">
+              <Restaurant
+                account={this.state.account}
+                restaurants={this.state.restaurants}
+                donationList={this.state.donationList}
+                donateRestaurant={this.donateRestaurant.bind(this)}
+                donateRestaurantWithReferrer={this.donateRestaurantWithReferrer.bind(this)}
+                getDonationLog={this.getDonationLog.bind(this)}
+                getPrice={this.getPrice.bind(this)}
+                currentNetwork={this.state.currentNetwork} />
+            </Route>
+            <Route path="/restaurant/:id">
+              <Restaurant
+                account={this.state.account}
+                restaurants={this.state.restaurants}
+                donationList={this.state.donationList}
+                donateRestaurant={this.donateRestaurant.bind(this)}
+                getDonationLog={this.getDonationLog.bind(this)}
+                getPrice={this.getPrice.bind(this)}
+                ethPrice={this.state.ethPrice}
+                currentNetwork={this.state.currentNetwork} />
+            </Route>
+            <Route path="/">
+              <Restaurants
+                restaurants={this.state.restaurants}
+                ethPrice={this.state.ethPrice}
+                currentNetwork={this.state.currentNetwork} />
+            </Route>
+          </Switch>
+          <Footer />
+        </Router>
+      </GlobalProvider>
     );
   }
 }
