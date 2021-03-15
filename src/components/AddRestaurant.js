@@ -74,7 +74,7 @@ function AddRestaurant({ createRestaurant, getPrice, currentNetwork }){
               <h1 className="text-center mb-4">Add Restaurant</h1>
 
               <div className="form-group">
-                <label>Name of the Restaurant</label>
+                <label>Name of the Restaurant *</label>
                 <input
                   className="form-control"
                   type="text"
@@ -85,7 +85,7 @@ function AddRestaurant({ createRestaurant, getPrice, currentNetwork }){
               </div>
 
               <div className="form-group">
-                <label>Location</label>
+                <label>Location *</label>
                 <input
                   className="form-control"
                   type="text"
@@ -105,7 +105,7 @@ function AddRestaurant({ createRestaurant, getPrice, currentNetwork }){
               </div>
 
               <div className="form-group">
-                <label>Amount</label>
+                <label>Amount *</label>
                 <div className="d-flex align-items-center">
                   <div className="input-group mb-3 w-50">
                     <input
@@ -124,7 +124,7 @@ function AddRestaurant({ createRestaurant, getPrice, currentNetwork }){
               </div>
 
               <div className="form-group">
-                <label>Description</label>
+                <label>Description *</label>
                 <textarea
                   className="form-control"
                   type="text"
@@ -135,7 +135,10 @@ function AddRestaurant({ createRestaurant, getPrice, currentNetwork }){
               </div>
 
               {!loading ? (
-                <button className="btn primary-bg-color btn-block" onClick={addRestaurant}>
+                <button
+                  className="btn primary-bg-color btn-block"
+                  onClick={addRestaurant}
+                  disabled={!name || !location || !amount || !description}>
                   Create
                 </button>
               ) : (
