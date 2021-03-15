@@ -21,4 +21,8 @@ A dapp that allows customers to donate funds to restaurants and earn NFT
 - Run `npm i` to install the dependencies
 - Open up Ganache and click "Quickstart"
 - Run `truffle migrate` to deploy the contract
+- Create a file called 'config.js' on the src folder and add the following code
+```
+export const portisId = 'Get Portis ID from Portis Dashboard';
+```
 - Run `npm start` to start the dapp

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route  } from 'react-router-dom';
+import Portis from '@portis/web3';
 import Web3 from 'web3';
 
+import { portisId } from './config';
 import { GlobalProvider } from './context/GlobalState';
 import './App.css';
 import Navbar from './components/layout/Navbar';
@@ -35,7 +37,10 @@ class App extends Component{
   }
 
   async loadBlockchainData(){
-    const web3 = window.web3;
+    //const web3 = window.web3;
+
+    const portis = new Portis(portisId, 'maticMumbai');
+    const web3 = new Web3(portis.provider);
 
     const accounts = await web3.eth.getAccounts();
     this.setState({ account: accounts[0] });
