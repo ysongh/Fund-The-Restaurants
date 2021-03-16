@@ -2,9 +2,8 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'; 
 
 import { GlobalContext } from '../context/GlobalState';
-import WalletModal from './WalletModal';
 
-function Restaurants({ connectToBlockchain, restaurants, ethPrice, currentNetwork }){
+function Restaurants({restaurants, ethPrice }){
   const { walletAddress } = useContext(GlobalContext);
 
   const getUSDValue = restaurant => {
@@ -15,7 +14,7 @@ function Restaurants({ connectToBlockchain, restaurants, ethPrice, currentNetwor
     <div className="container" style={{ minHeight: '65vh'}}>
       <div className="jumbotron my-3">
         <h1 className="">Support these restaurants</h1>
-        <p className="lead">You can help them by donating some {currentNetwork} and earn NFT</p>
+        <p className="lead">You can help them by donating some crypto and earn NFT</p>
         <hr className="my-4"></hr>
         <p>If you are an restaurant owner that need funds, you can fill out the form to create a post</p>
         {walletAddress ? <p className="lead">
@@ -46,7 +45,6 @@ function Restaurants({ connectToBlockchain, restaurants, ethPrice, currentNetwor
           )
         })}
       </div>
-      <WalletModal connectToBlockchain={connectToBlockchain} />
     </div>
   )
 }

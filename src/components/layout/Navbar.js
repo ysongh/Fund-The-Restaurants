@@ -4,14 +4,8 @@ import Identicon from 'identicon.js';
 
 import { GlobalContext } from '../../context/GlobalState';
 
-function Navbar({ connectToBlockchain, currentNetwork }){
-  const { walletAddress, setWalletAddress } = useContext(GlobalContext);
-
-  const handleConnect = async () => {
-    await connectToBlockchain();
-    const accounts = await window.web3.eth.getAccounts();
-    setWalletAddress(accounts[0]);
-  }
+function Navbar({ currentNetwork }){
+  const { walletAddress } = useContext(GlobalContext);
 
   return(
     <nav className="navbar navbar-expand-md navbar-light bg-light">
@@ -46,7 +40,7 @@ function Navbar({ connectToBlockchain, currentNetwork }){
                 rel="noopener noreferrer"
                 href={currentNetwork === 'MATIC' ? "https://explorer-mumbai.maticvigil.com/address/" + walletAddress : "https://kovan.etherscan.io/address/" + walletAddress}>
                 {walletAddress.substring(0,8)}...{walletAddress.substring(34,42)}
-              </a> : <button className="btn secondary-bg-color" onClick={() => handleConnect()}>Open Wallet</button>
+              </a> : <button className="btn secondary-bg-color" data-toggle="modal" data-target="#walletModal">Open Wallet</button>
               }
               {walletAddress && 
                 <img
@@ -59,7 +53,9 @@ function Navbar({ connectToBlockchain, currentNetwork }){
             </li>
           </ul>
         </div>
+        
       </div>
+      
     </nav>
   );
 };

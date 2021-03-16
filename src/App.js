@@ -13,6 +13,7 @@ import Restaurants from './components/Restaurants';
 import Restaurant from './components/Restaurant';
 import AddRestaurant from './components/AddRestaurant';
 import MyTokens from './components/MyTokens';
+import WalletModal from './components/WalletModal';
 
 class App extends Component{
   state = {
@@ -186,7 +187,7 @@ class App extends Component{
     return (
       <GlobalProvider>
         <Router className="App">
-          <Navbar connectToBlockchain={this.connectToBlockchain.bind(this)} currentNetwork={this.state.currentNetwork} />
+          <Navbar currentNetwork={this.state.currentNetwork} />
           <div className="alert alert-info" role="alert">
             <p className="text-center m-0">
               Contract currently works on the Kovan and Matic Mumbai Test Network
@@ -226,13 +227,12 @@ class App extends Component{
             </Route>
             <Route path="/">
               <Restaurants
-                connectToBlockchain={this.connectToBlockchain.bind(this)}
                 restaurants={this.state.restaurants}
-                ethPrice={this.state.ethPrice}
-                currentNetwork={this.state.currentNetwork} />
+                ethPrice={this.state.ethPrice}/>
             </Route>
           </Switch>
           <Footer />
+          <WalletModal connectToBlockchain={this.connectToBlockchain.bind(this)} />
         </Router>
       </GlobalProvider>
     );
