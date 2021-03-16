@@ -1,11 +1,19 @@
 import React, {useContext} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Identicon from 'identicon.js';
 
 import { GlobalContext } from '../../context/GlobalState';
 
-function Navbar({ currentNetwork }){
-  const { walletAddress } = useContext(GlobalContext);
+function Navbar({ currentNetwork, portis, reset }){
+  const history = useHistory();
+  const { walletAddress, setWalletAddress } = useContext(GlobalContext);
+
+  const handleLogout = async () => {
+    if(portis) await portis.logout();
+    setWalletAddress("");
+    reset();
+    history.push('/');
+  }
 
   return(
     <nav className="navbar navbar-expand-md navbar-light bg-light">
@@ -39,18 +47,23 @@ function Navbar({ currentNetwork }){
                 className="nav-link text-primary-color"
                 rel="noopener noreferrer"
                 href={currentNetwork === 'MATIC' ? "https://explorer-mumbai.maticvigil.com/address/" + walletAddress : "https://kovan.etherscan.io/address/" + walletAddress}>
-                {walletAddress.substring(0,8)}...{walletAddress.substring(34,42)}
+                {walletAddress.substring(0,5)}...{walletAddress.substring(37,42)}
               </a> : <button className="btn secondary-bg-color" data-toggle="modal" data-target="#walletModal">Open Wallet</button>
               }
               {walletAddress && 
                 <img
-                  className="mt-1"
+                  className="mt-1 mr-2"
                   width='35'
                   height='35'
                   src={`data:image/png;base64,${new Identicon(walletAddress, 30).toString()}`}
                   alt="Icon" />
               }
             </li>
+            {walletAddress && 
+              <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                <button className="btn btn-danger" onClick={() => handleLogout()}>Disconnect Wallet</button>
+              </li>
+            }
           </ul>
         </div>
         

@@ -25,7 +25,8 @@ class App extends Component{
     donationList: [],
     tokens: [],
     ethPrice: 0,
-    currentNetwork: "ETH"
+    currentNetwork: "ETH",
+    portis: null
   }
 
   async connectToBlockchain(walletType){
@@ -44,6 +45,7 @@ class App extends Component{
     if(walletType === 'Metamask') web3 = window.web3;
     else{
       const portis = new Portis(portisId, 'maticMumbai');
+      this.setState({ portis });
       web3 = new Web3(portis.provider);
       window.web3 = web3;
     }
@@ -183,11 +185,22 @@ class App extends Component{
     return ethPrice;
   }
 
+  async reset(){
+    this.setState({
+      restaurants: [],
+      donationList: [],
+      tokens: []
+    })
+  }
+
   render(){
     return (
       <GlobalProvider>
         <Router className="App">
-          <Navbar currentNetwork={this.state.currentNetwork} />
+          <Navbar
+            currentNetwork={this.state.currentNetwork}
+            portis={this.state.portis}
+            reset={this.reset.bind(this)} />
           <div className="alert alert-info" role="alert">
             <p className="text-center m-0">
               Contract currently works on the Kovan and Matic Mumbai Test Network
