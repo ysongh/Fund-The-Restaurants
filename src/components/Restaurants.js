@@ -2,15 +2,10 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'; 
 
 import { GlobalContext } from '../context/GlobalState';
+import WalletModal from './WalletModal';
 
 function Restaurants({ connectToBlockchain, restaurants, ethPrice, currentNetwork }){
-  const { walletAddress, setWalletAddress } = useContext(GlobalContext);
-
-  const handleConnect = async () => {
-    await connectToBlockchain();
-    const accounts = await window.web3.eth.getAccounts();
-    setWalletAddress(accounts[0]);
-  }
+  const { walletAddress } = useContext(GlobalContext);
 
   const getUSDValue = restaurant => {
     const totalUSDValue = (ethPrice * +window.web3.utils.fromWei(restaurant.donationNeeded.toString(), 'Ether')) / 100000000;
@@ -25,7 +20,7 @@ function Restaurants({ connectToBlockchain, restaurants, ethPrice, currentNetwor
         <p>If you are an restaurant owner that need funds, you can fill out the form to create a post</p>
         {walletAddress ? <p className="lead">
           <Link className="btn primary-bg-color btn-lg" to="/add-restaurant" role="button">Get Started</Link>
-        </p> : <button className="btn secondary-bg-color btn-lg" onClick={() => handleConnect()}>Open Wallet</button>
+        </p> : <button className="btn secondary-bg-color btn-lg" data-toggle="modal" data-target="#walletModal">Open Wallet</button>
         }
       </div>
 
@@ -51,6 +46,7 @@ function Restaurants({ connectToBlockchain, restaurants, ethPrice, currentNetwor
           )
         })}
       </div>
+      <WalletModal connectToBlockchain={connectToBlockchain} />
     </div>
   )
 }

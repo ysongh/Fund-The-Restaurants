@@ -27,20 +27,25 @@ class App extends Component{
     currentNetwork: "ETH"
   }
 
-  async connectToBlockchain(){
-    await this.loadWeb3();
-    await this.loadBlockchainData();
+  async connectToBlockchain(walletType){
+    if (walletType === 'Metamask') await this.loadWeb3();
+
+    await this.loadBlockchainData(walletType);
     await this.getRestaurant();
 
     const ethValue = await this.getPrice();
     this.setState({ ethPrice: ethValue });
   }
 
-  async loadBlockchainData(){
-    //const web3 = window.web3;
+  async loadBlockchainData(walletType){
+    let web3;
 
-    const portis = new Portis(portisId, 'maticMumbai');
-    const web3 = new Web3(portis.provider);
+    if(walletType === 'Metamask') web3 = window.web3;
+    else{
+      const portis = new Portis(portisId, 'maticMumbai');
+      web3 = new Web3(portis.provider);
+      window.web3 = web3;
+    }
 
     const accounts = await web3.eth.getAccounts();
     this.setState({ account: accounts[0] });
@@ -49,7 +54,7 @@ class App extends Component{
     
     if(networkId === 80001) this.setState({ currentNetwork: 'MATIC' });
 
-    const networkData = RestaurantsBlockchain.networks[networkId];
+    const networkData = await RestaurantsBlockchain.networks[networkId];
 
     if(networkData){
       const abi = RestaurantsBlockchain.abi;
