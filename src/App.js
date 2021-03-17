@@ -244,8 +244,9 @@ class App extends Component{
                 ethPrice={this.state.ethPrice}/>
             </Route>
           </Switch>
-          <Footer />
+
           <WalletModal connectToBlockchain={this.connectToBlockchain.bind(this)} />
+          <Footer />
         </Router>
       </GlobalProvider>
     );
