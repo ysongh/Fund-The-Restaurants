@@ -2,7 +2,7 @@ import React from 'react';
 
 function MyTokens({ tokens, currentNetwork }){
   return(
-    <div className="container">
+    <div className="container" style={{minHeight: '65vh'}}>
       <h1 className="my-3">My Tokens</h1>
 
       <div className="row">
@@ -35,6 +35,7 @@ function MyTokens({ tokens, currentNetwork }){
           )
         })}
       </div>
+      {!tokens.length && <p>You do not have any NFTs.  You can earn some NFTs by donating some crypto to restaurants.</p>}
     </div>
   )
 }

@@ -64,7 +64,7 @@ function DonationModal({ getDonationLog, donateRestaurant, donateRestaurantWithR
                         onChange={(e) => handleAmount(e)} 
                     />
                     <div className="input-group-append">
-                      <span className="input-group-text">ETH</span>
+                      <span className="input-group-text">{currentNetwork}</span>
                     </div>
                   </div>
                   <p className="lead">${price}</p>
