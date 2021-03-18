@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import { GlobalContext } from '../context/GlobalState';
 
-function WalletModal({ connectToBlockchain }){
+function WalletModal({ connectToBlockchain, changeNetwork }){
   const { setWalletAddress } = useContext(GlobalContext);
   
   const handleConnect = async walletType => {
@@ -24,6 +24,16 @@ function WalletModal({ connectToBlockchain }){
             </div>
 
             <div className="modal-body">
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <label className="input-group-text">Choose Network</label>
+                </div>
+                <select className="custom-select" onChange={(e) => changeNetwork(e.target.value)}>
+                  <option value="ETH" defaultValue>Kovan Test Network</option>
+                  <option value="MATIC">Matic Mumbai Test Network</option>
+                </select>
+              </div>
+
               <div className="d-flex justify-content-around">
                 <div>
                   <img

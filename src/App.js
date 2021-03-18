@@ -44,7 +44,7 @@ class App extends Component{
 
     if(walletType === 'Metamask') web3 = window.web3;
     else{
-      const portis = new Portis(portisId, 'maticMumbai');
+      const portis = new Portis(portisId, this.state.currentNetwork === 'ETH' ? 'kovan' : 'maticMumbai');
       this.setState({ portis });
       web3 = new Web3(portis.provider);
       window.web3 = web3;
@@ -54,8 +54,6 @@ class App extends Component{
     this.setState({ account: accounts[0] });
 
     const networkId = await web3.eth.net.getId();
-    
-    if(networkId === 80001) this.setState({ currentNetwork: 'MATIC' });
 
     const networkData = await RestaurantsBlockchain.networks[networkId];
 
@@ -185,12 +183,16 @@ class App extends Component{
     return ethPrice;
   }
 
-  async reset(){
+  reset(){
     this.setState({
       restaurants: [],
       donationList: [],
       tokens: []
     })
+  }
+
+  changeNetwork(value){
+    this.setState({ currentNetwork: value });
   }
 
   render(){
@@ -245,7 +247,9 @@ class App extends Component{
             </Route>
           </Switch>
 
-          <WalletModal connectToBlockchain={this.connectToBlockchain.bind(this)} />
+          <WalletModal
+            connectToBlockchain={this.connectToBlockchain.bind(this)}
+            changeNetwork={this.changeNetwork.bind(this)} />
           <Footer />
         </Router>
       </GlobalProvider>
