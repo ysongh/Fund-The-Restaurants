@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { GlobalContext } from '../context/GlobalState';
 
-function Restaurants({restaurants, ethPrice }){
+function Restaurants({restaurants, ethPrice, loading }){
   const { walletAddress } = useContext(GlobalContext);
 
   const getUSDValue = restaurant => {
@@ -19,7 +19,7 @@ function Restaurants({restaurants, ethPrice }){
         <p>If you are an restaurant owner that need funds, you can fill out the form to create a post</p>
         {walletAddress ? <p className="lead">
           <Link className="btn primary-bg-color btn-lg" to="/add-restaurant" role="button">Get Started</Link>
-        </p> : <button className="btn secondary-bg-color btn-lg" data-toggle="modal" data-target="#walletModal">Open Wallet</button>
+        </p> : <button className="btn secondary-bg-color btn-lg" data-toggle="modal" data-target="#walletModal" disabled={loading}>Open Wallet</button>
         }
       </div>
 

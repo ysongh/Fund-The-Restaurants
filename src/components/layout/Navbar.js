@@ -4,7 +4,7 @@ import Identicon from 'identicon.js';
 
 import { GlobalContext } from '../../context/GlobalState';
 
-function Navbar({ currentNetwork, portis, reset }){
+function Navbar({ loading, currentNetwork, portis, reset }){
   const history = useHistory();
   const { walletAddress, setWalletAddress } = useContext(GlobalContext);
 
@@ -48,7 +48,7 @@ function Navbar({ currentNetwork, portis, reset }){
                 rel="noopener noreferrer"
                 href={currentNetwork === 'MATIC' ? "https://explorer-mumbai.maticvigil.com/address/" + walletAddress : "https://kovan.etherscan.io/address/" + walletAddress}>
                 {walletAddress.substring(0,5)}...{walletAddress.substring(37,42)}
-              </a> : <button className="btn secondary-bg-color" data-toggle="modal" data-target="#walletModal">Open Wallet</button>
+              </a> : <button className="btn secondary-bg-color" data-toggle="modal" data-target="#walletModal" disabled={loading}>Open Wallet</button>
               }
               {walletAddress && 
                 <img

@@ -2,13 +2,15 @@ import React, { useContext } from 'react';
 
 import { GlobalContext } from '../context/GlobalState';
 
-function WalletModal({ connectToBlockchain, changeNetwork }){
+function WalletModal({ connectToBlockchain, changeNetwork, setLoading }){
   const { setWalletAddress } = useContext(GlobalContext);
   
   const handleConnect = async walletType => {
+    setLoading();
     await connectToBlockchain(walletType);
     const accounts = await window.web3.eth.getAccounts();
     setWalletAddress(accounts[0]);
+    setLoading();
   }
 
   return(

@@ -26,7 +26,8 @@ class App extends Component{
     tokens: [],
     ethPrice: 0,
     currentNetwork: "ETH",
-    portis: null
+    portis: null,
+    loading: false
   }
 
   async connectToBlockchain(walletType){
@@ -183,6 +184,10 @@ class App extends Component{
     return ethPrice;
   }
 
+  setLoading(){
+    this.setState({ loading: !this.state.loading})
+  }
+
   reset(){
     this.setState({
       restaurants: [],
@@ -200,6 +205,7 @@ class App extends Component{
       <GlobalProvider>
         <Router className="App">
           <Navbar
+            loading={this.state.loading}
             currentNetwork={this.state.currentNetwork}
             portis={this.state.portis}
             reset={this.reset.bind(this)} />
@@ -242,14 +248,16 @@ class App extends Component{
             </Route>
             <Route path="/">
               <Restaurants
+                loading={this.state.loading}
                 restaurants={this.state.restaurants}
-                ethPrice={this.state.ethPrice}/>
+                ethPrice={this.state.ethPrice} />
             </Route>
           </Switch>
 
           <WalletModal
             connectToBlockchain={this.connectToBlockchain.bind(this)}
-            changeNetwork={this.changeNetwork.bind(this)} />
+            changeNetwork={this.changeNetwork.bind(this)}
+            setLoading={this.setLoading.bind(this)} />
           <Footer />
         </Router>
       </GlobalProvider>
