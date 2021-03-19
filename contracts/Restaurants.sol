@@ -1,6 +1,7 @@
 pragma solidity ^0.6.12;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "./Token.sol";
 import "./AggregatorV3Interface.sol";
 
 contract Restaurants is ERC721 {
@@ -8,6 +9,7 @@ contract Restaurants is ERC721 {
   mapping(uint => Restaurant) public restaurants;
   mapping(uint => NFT) public nft;
   AggregatorV3Interface internal priceFeed;
+  Token public token;
 
   /**
    * Network: Kovan
@@ -19,7 +21,8 @@ contract Restaurants is ERC721 {
    * Aggregator: MATIC/USD
    * Address: 0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada
    */
-  constructor() ERC721("FundRestaurantsToken", "FRT") public {
+  constructor(Token _token) ERC721("FundRestaurantsToken", "FRT") public {
+    token = _token;
     priceFeed = AggregatorV3Interface(0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada);
   }
 

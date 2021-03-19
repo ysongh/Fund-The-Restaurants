@@ -1,5 +1,9 @@
+const Token = artifacts.require("Token");
 const Restaurants = artifacts.require("Restaurants");
 
 module.exports = async function(deployer){
-	deployer.deploy(Restaurants);
+	await deployer.deploy(Token);
+	const token = await Token.deployed();
+
+	await deployer.deploy(Restaurants, token.address);
 };

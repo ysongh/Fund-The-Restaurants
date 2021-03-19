@@ -4,6 +4,7 @@ require('chai')
     .use(require('chai-as-promised'))
     .should();
 
+const Token = artifacts.require("Token");
 const Restaurants = artifacts.require("Restaurants");
 
 function tokensToWei(val) {
@@ -11,13 +12,45 @@ function tokensToWei(val) {
 }
 
 contract('Restaurants', ([deployer, account1, account2, account3]) => {
+    let token;
     let restaurants;
 
     before(async() => {
-        restaurants = await Restaurants.new();
+        token = await Token.new();
+        restaurants = await Restaurants.new(token.address);
     });
 
-    describe('deployment', async() => {
+    describe('Token deployment', async() => {
+        it('deploys successfully', async() => {
+            const address = await token.address;
+            assert.notEqual(address, 0x0);
+            assert.notEqual(address, '');
+            assert.notEqual(address, null);
+            assert.notEqual(address, undefined);
+        });
+
+        it('has a name', async () => {
+            const name = await token.name();
+            assert.equal(name, 'Fund The Restaurants');
+        });
+
+        it('has a symbol', async () => {
+            const symbol = await token.symbol();
+            assert.equal(symbol, 'FTR');
+        });
+
+        it('set the total supply to 1,000,000', async() => {
+            const totalSupply = await token.totalSupply();
+            assert.equal(totalSupply.toString(), tokensToWei('1000000'));
+        });
+
+        it('deployer has tokens', async () => {
+            let balance = await token.balanceOf(deployer);
+            assert.equal(balance.toString(), tokensToWei('1000000'));
+        })
+    });
+
+    describe('Restaurants deployment', async() => {
         it('deploys successfully', async() => {
             const address = await restaurants.address;
             assert.notEqual(address, 0x0);
