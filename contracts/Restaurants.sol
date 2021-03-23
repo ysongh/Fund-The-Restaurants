@@ -9,7 +9,7 @@ contract Restaurants is ERC721 {
   mapping(uint => Restaurant) public restaurants;
   mapping(uint => NFT) public nft;
   AggregatorV3Interface internal priceFeed;
-  Token public token;
+  Token private token;
 
   /**
    * Network: Kovan
@@ -120,11 +120,8 @@ contract Restaurants is ERC721 {
     uint blue = getRandomValue(255);
     nft[_tokenId] = NFT(_restaurant.name, red, green, blue, msg.value);
 
-    // Crate NFT for referrer
-    _tokenId = totalSupply().add(1);
-    _safeMint(_referrer, _tokenId);
-    _setTokenURI(_tokenId, _tokenURI);
-    nft[_tokenId] = NFT(_restaurant.name, red, green, blue, 0);
+    // Give 1 token (FTR) to the referrer
+    token.transfer(_referrer, 1000000000000000000);
 
     emit DonationForRestaurant(_restaurantId, msg.value, _restaurant.donationNeeded, now, msg.sender, _restaurant.owner);
   }

@@ -205,7 +205,7 @@ contract('Restaurants', ([deployer, account1, account2, account3]) => {
         });
         
         it('donation works', async() => {
-            const event = result.logs[2].args;
+            const event = result.logs[1].args;
             assert.equal(event.restaurantId, restaurantId, 'Restaurant Id is correct');
             assert.equal(event.amount.toString(), tokensToWei('1'), 'Amount is correct');
             assert.notEqual(event.date, null, "Date is not null");
@@ -236,32 +236,6 @@ contract('Restaurants', ([deployer, account1, account2, account3]) => {
             assert.equal(tokenURI, restaurant.imageURL);
         })
 
-        it('mints tokens for referrer', async () => {
-            result = await restaurants.totalSupply();
-            assert.equal(result.toString(), '3', 'Total supply is correct');
-
-            result = await restaurants.balanceOf(account3);
-            assert.equal(result.toString(), '1', 'Referrer total NFT is correct');
-
-            result = await restaurants.ownerOf('3');
-            assert.equal(result.toString(), account3.toString(), 'Referrer get the token');
-            result = await restaurants.tokenOfOwnerByIndex(account3, 0);
-            
-            let balanceOf = await restaurants.balanceOf(account3);
-            let tokenIds = [];
-
-            for(let i = 0; i < balanceOf; i++){
-                let id = await restaurants.tokenOfOwnerByIndex(account2, i);
-                tokenIds.push(id.toString());
-            }
-            
-            let expected = ['1'];
-            assert.equal(tokenIds.toString(), expected.toString(), 'tokenIds is correct');
-
-            let tokenURI = await restaurants.tokenURI('3');
-            assert.equal(tokenURI, restaurant.imageURL);
-        })
-
         it('has valid rgb color, name, donation amount for donator', async () => {
             result = await restaurants.nft(2);
 
@@ -273,15 +247,9 @@ contract('Restaurants', ([deployer, account1, account2, account3]) => {
             assert.isAtMost(result.red.toNumber(), 255, 'Value must not be greater than 255');
         })
 
-        it('has valid rgb color, name, donation amount for referrer', async () => {
-            result = await restaurants.nft(3);
-
-            assert.notEqual(result.name, undefined);
-            assert.notEqual(result.red, undefined);
-            assert.notEqual(result.green, undefined);
-            assert.notEqual(result.blue, undefined);
-            assert.equal(result.amount, 0, 'Amount is correct');
-            assert.isAtMost(result.red.toNumber(), 255, 'Value must not be greater than 255');
+        it('gave 1 token to the referrer', async () => {
+            let balance = await token.balanceOf(account3);
+            assert.equal(balance.toString(), tokensToWei('1'));
         })
     });
 })
