@@ -6,4 +6,7 @@ module.exports = async function(deployer){
 	const token = await Token.deployed();
 
 	await deployer.deploy(Restaurants, token.address);
+	const restaurants = await Restaurants.deployed();
+
+	await token.createTokens(restaurants.address);
 };

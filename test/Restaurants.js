@@ -18,6 +18,8 @@ contract('Restaurants', ([deployer, account1, account2, account3]) => {
     before(async() => {
         token = await Token.new();
         restaurants = await Restaurants.new(token.address);
+
+        await token.createTokens(restaurants.address);
     });
 
     describe('Token deployment', async() => {
@@ -44,8 +46,8 @@ contract('Restaurants', ([deployer, account1, account2, account3]) => {
             assert.equal(totalSupply.toString(), tokensToWei('1000000'));
         });
 
-        it('deployer has tokens', async () => {
-            let balance = await token.balanceOf(deployer);
+        it('has tokens', async () => {
+            let balance = await token.balanceOf(restaurants.address);
             assert.equal(balance.toString(), tokensToWei('1000000'));
         })
     });
