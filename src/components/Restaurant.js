@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useParams } from "react-router";
 import moment from 'moment';
 import $ from 'jquery'; 
 
+import { GlobalContext } from '../context/GlobalState';
 import DonationModal from './DonationModal';
 
 function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, donateRestaurantWithReferrer, donationList, getPrice, ethPrice, currentNetwork }){
   const { id, referrerAddress } =  useParams();
+  const { walletAddress } = useContext(GlobalContext);
 
   useEffect(() => {
     async function fetchData() {
@@ -65,9 +67,9 @@ function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, do
               <p>{restaurants[id - 1]?.location}</p>
               <p className="text-secondary">{restaurants[id - 1]?.description}</p>
               
-              <button className="btn primary-bg-color btn-block" data-toggle="modal" data-target="#donationModal">
+              {walletAddress ? <button className="btn primary-bg-color btn-block" data-toggle="modal" data-target="#donationModal">
                 Donate
-              </button>
+              </button> : <p className="lead text-center text-danger">Connect to your wallet to donate</p> }
             </div>
           </div>
         </div>
