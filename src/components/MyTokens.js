@@ -1,9 +1,24 @@
-import React from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 
-function MyTokens({ tokens, currentNetwork }){
+import { GlobalContext } from '../context/GlobalState';
+
+function MyTokens({ tokenBlockchain, tokens, currentNetwork }){
+  const { walletAddress } = useContext(GlobalContext);
+  const [tokenAmount, setTokenAmount] = useState(0);
+  
+  useEffect(() => {
+    async function getTokenAmount() {
+      const tokens = await tokenBlockchain.methods.balanceOf(walletAddress).call();
+      setTokenAmount(tokens);
+    }
+
+    getTokenAmount();
+  }, [walletAddress])
+
   return(
     <div className="container" style={{minHeight: '65vh'}}>
       <h1 className="my-3">My Tokens</h1>
+      <p>{window.web3.utils.fromWei(tokenAmount.toString(), 'Ether')} FTR</p>
 
       <div className="row">
         {tokens.map(token => {

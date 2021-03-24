@@ -9,6 +9,7 @@ import './App.css';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import RestaurantsBlockchain from './abis/Restaurants.json';
+import Token from './abis/Token.json';
 import Restaurants from './components/Restaurants';
 import Restaurant from './components/Restaurant';
 import AddRestaurant from './components/AddRestaurant';
@@ -21,6 +22,7 @@ class App extends Component{
     restaurantCount: 0,
     totalSupply: 0,
     restaurantsBlockchain: null,
+    tokenBlockchain: null,
     restaurants: [],
     donationList: [],
     tokens: [],
@@ -55,6 +57,17 @@ class App extends Component{
     this.setState({ account: accounts[0] });
 
     const networkId = await web3.eth.net.getId();
+    const TokenData = Token.networks[networkId];
+
+    if(TokenData){
+      const abi = Token.abi;
+      const address = Token.networks[networkId].address;
+
+      const tokenBlockchain = new web3.eth.Contract(abi, address);
+      this.setState({ tokenBlockchain });
+    }else{
+      window.alert('Token Contract is not deployed to detected network.')
+    }
 
     const networkData = await RestaurantsBlockchain.networks[networkId];
 
@@ -91,7 +104,7 @@ class App extends Component{
         }
       }
     }else{
-      window.alert('Contract is not deployed to detected network.  Try Kovan Test Network')
+      window.alert('Restaurants contract is not deployed to detected network.')
     }
   }
 
@@ -216,7 +229,10 @@ class App extends Component{
           </div>
           <Switch>
             <Route path="/mytokens">
-              <MyTokens tokens={this.state.tokens} currentNetwork={this.state.currentNetwork} />
+              <MyTokens
+                tokenBlockchain={this.state.tokenBlockchain}
+                tokens={this.state.tokens}
+                currentNetwork={this.state.currentNetwork} />
             </Route>
             <Route path="/add-restaurant">
               <AddRestaurant
