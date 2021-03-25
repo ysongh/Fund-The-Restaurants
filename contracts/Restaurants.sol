@@ -147,6 +147,7 @@ contract Restaurants is ERC721 {
     _nft.blue = blue;
     nft[_tokenId] = _nft;
 
+    token.payOneToken(msg.sender, address(this));
     emit ChangeColor(_tokenId, red, green, blue);
   }
 

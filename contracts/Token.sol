@@ -12,4 +12,8 @@ contract Token is ERC20 {
         _mint(_recipient, 1000000000000000000000000);
         isCreateToken = true;
     }
+
+    function payOneToken(address _sender, address _recipient) external {
+        _transfer(_sender, _recipient, 1000000000000000000);
+    }
 }

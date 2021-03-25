@@ -281,5 +281,10 @@ contract('Restaurants', ([deployer, account1, account2, account3]) => {
             // reject if the token id is invalid
             await restaurants.changeColorOfNFT(10, { from: account3 }).should.be.rejected;
         });
+
+        it('user pay 1 FTR', async () => {
+            let balance = await token.balanceOf(account3);
+            assert.equal(balance.toString(), 0);
+        })
     });
 })
