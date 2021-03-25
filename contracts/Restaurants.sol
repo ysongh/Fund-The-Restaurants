@@ -66,6 +66,13 @@ contract Restaurants is ERC721 {
     address payable owner
   );
 
+  event ChangeColor (
+    uint tokenId,
+    uint red,
+    uint green,
+    uint blue
+  );
+
   function createRestaurant(string memory _name, string memory _description, string memory _location, string memory _imageURL, uint _donationNeeded) public {
     require(_donationNeeded > 0);
     require(bytes(_name).length > 0);
@@ -125,6 +132,22 @@ contract Restaurants is ERC721 {
     token.transfer(_referrer, 1000000000000000000);
 
     emit DonationForRestaurant(_restaurantId, msg.value, _restaurant.donationNeeded, now, msg.sender, _restaurant.owner);
+  }
+
+  function changeColorOfNFT(uint _tokenId) external {
+    require(token.balanceOf(msg.sender) > 0);
+    require(_tokenId <= totalSupply());
+
+    NFT memory _nft = nft[_tokenId];
+    uint red = getRandomValue(253);
+    uint green = getRandomValue(254);
+    uint blue = getRandomValue(255);
+    _nft.red = red;
+    _nft.green = green;
+    _nft.blue = blue;
+    nft[_tokenId] = _nft;
+
+    emit ChangeColor(_tokenId, red, green, blue);
   }
 
   function getRandomValue(uint mod) internal view returns(uint) {

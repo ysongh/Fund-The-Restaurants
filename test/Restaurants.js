@@ -185,6 +185,7 @@ contract('Restaurants', ([deployer, account1, account2, account3]) => {
         it('has valid rgb color, name, donation amount', async () => {
             result = await restaurants.nft(1);
 
+            assert.equal(result.tokenId, 1);
             assert.notEqual(result.name, undefined);
             assert.notEqual(result.red, undefined);
             assert.notEqual(result.green, undefined);
@@ -239,6 +240,7 @@ contract('Restaurants', ([deployer, account1, account2, account3]) => {
         it('has valid rgb color, name, donation amount for donator', async () => {
             result = await restaurants.nft(2);
 
+            assert.equal(result.tokenId, 2);
             assert.notEqual(result.name, undefined);
             assert.notEqual(result.red, undefined);
             assert.notEqual(result.green, undefined);
@@ -251,5 +253,33 @@ contract('Restaurants', ([deployer, account1, account2, account3]) => {
             let balance = await token.balanceOf(account3);
             assert.equal(balance.toString(), tokensToWei('1'));
         })
+    });
+
+    describe('change color of the NFT', async() => {
+        let oldNFT;
+        let newNFT;
+        let result;
+
+        it('change red, green, and blue of the NFT', async () => {
+            oldNFT = await restaurants.nft(1);
+
+            result = await restaurants.changeColorOfNFT(1, { from: account3 });
+            const event = result.logs[0].args;
+            assert.equal(event.tokenId, 1, 'Token Id is correct');
+            assert.notEqual(event.red, undefined, 'Red value is not undefined');
+            assert.notEqual(event.green, undefined, 'Green value is not undefined');
+            assert.notEqual(event.blue, undefined, 'Blue value is not undefined');
+
+            newNFT = await restaurants.nft(1);
+            assert.notEqual(oldNFT.red.toString(), newNFT.red.toString(), 'Red value has changed');
+            assert.notEqual(oldNFT.green.toString(), newNFT.green.toString(), 'Green value has changed');
+            assert.notEqual(oldNFT.blue.toString(), newNFT.blue.toString(), 'Blue value has changed');
+
+            // reject if the user does not have any FTR tokens
+            await restaurants.changeColorOfNFT(1, { from: account2 }).should.be.rejected;
+
+            // reject if the token id is invalid
+            await restaurants.changeColorOfNFT(10, { from: account3 }).should.be.rejected;
+        });
     });
 })
