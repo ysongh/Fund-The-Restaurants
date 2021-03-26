@@ -167,7 +167,7 @@ class App extends Component{
       .donateETHToRestaurantWithReferrer(id, imageURL, referrerAddress)
       .send({ from: this.state.account, value: window.web3.utils.toWei(amount.toString(), 'Ether') });
     console.log(res)
-    const tokenId = res.events.Transfer[0].returnValues.tokenId;
+    const tokenId = res.events.Transfer.returnValues.tokenId;
 
     const tokenURI = await this.state.restaurantsBlockchain.methods.tokenURI(tokenId).call();
     const data = await this.state.restaurantsBlockchain.methods.nft(tokenId).call();
@@ -190,6 +190,23 @@ class App extends Component{
   async getDonationLog(restaurantId){
     const transactions = await this.state.restaurantsBlockchain?.getPastEvents('DonationForRestaurant', { fromBlock: 0, toBlock: 'latest' });
     this.setState({ donationList: transactions?.filter(transaction => transaction.returnValues.restaurantId === restaurantId ) });
+  }
+
+  async changeColor(tokenId){
+    const res = await this.state.restaurantsBlockchain.methods
+      .changeColorOfNFT(tokenId)
+      .send({ from: this.state.account });
+
+    let temp = [...this.state.tokens];
+    for(let token of temp){
+      if(token.id === tokenId){
+        token.red = res.events.ChangeColor.returnValues.red
+        token.green = res.events.ChangeColor.returnValues.green
+        token.blue = res.events.ChangeColor.returnValues.blue
+      }
+    }
+    
+    this.setState({ tokens: [...temp] });
   }
 
   async getPrice(){
@@ -230,6 +247,7 @@ class App extends Component{
           <Switch>
             <Route path="/mytokens">
               <MyTokens
+                changeColor={this.changeColor.bind(this)}
                 tokenBlockchain={this.state.tokenBlockchain}
                 tokens={this.state.tokens}
                 currentNetwork={this.state.currentNetwork} />

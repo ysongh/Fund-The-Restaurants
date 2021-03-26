@@ -2,23 +2,28 @@ import React, { useEffect, useContext, useState } from 'react';
 
 import { GlobalContext } from '../context/GlobalState';
 
-function MyTokens({ tokenBlockchain, tokens, currentNetwork }){
+function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork }){
   const { walletAddress } = useContext(GlobalContext);
   const [tokenAmount, setTokenAmount] = useState(0);
   
   useEffect(() => {
     async function getTokenAmount() {
       const tokens = await tokenBlockchain.methods.balanceOf(walletAddress).call();
-      setTokenAmount(tokens);
+      setTokenAmount(+window.web3.utils.fromWei(tokens.toString(), 'Ether'));
     }
 
     getTokenAmount();
   }, [walletAddress])
 
+  const handleClick = async tokenId => {
+    await changeColor(tokenId);
+    setTokenAmount(tokenAmount - 1);
+  }
+
   return(
     <div className="container" style={{minHeight: '65vh'}}>
       <h1 className="my-3">My Tokens</h1>
-      <p>{window.web3.utils.fromWei(tokenAmount.toString(), 'Ether')} FTR</p>
+      <p>{tokenAmount} FTR</p>
 
       <div className="row">
         {tokens.map(token => {
@@ -33,19 +38,16 @@ function MyTokens({ tokenBlockchain, tokens, currentNetwork }){
                   <img className="img-rounded" src={token.tokenURI ? `https://ipfs.infura.io/ipfs/${token.tokenURI}` : '/images/no-image.png'} alt="NFT" />
 
                   <center>
-                    {token.amount.toString() !== '0' ? (
-                      <span className="badge secondary-bg-color">
-                        Donate {window.web3.utils.fromWei(token.amount.toString(), 'Ether')} {currentNetwork}
-                      </span>
-                    ) : (
-                      <span className="badge secondary-bg-color">
-                        Share
-                      </span>
-                    )}
-                    
+                    <span className="badge secondary-bg-color">
+                      Donate {window.web3.utils.fromWei(token.amount.toString(), 'Ether')} {currentNetwork}
+                    </span>
                   </center>
                 </div>
               </div>
+
+              <center>
+                <button className="btn primary-bg-color btn-sm" onClick={() => handleClick(token.id)}>Change Color</button>
+              </center>
             </div>
           )
         })}
