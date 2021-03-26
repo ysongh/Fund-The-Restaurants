@@ -105,6 +105,9 @@ contract Restaurants is ERC721 {
     uint blue = getRandomValue(255);
     nft[_tokenId] = NFT(_tokenId, _restaurant.name, red, green, blue, msg.value);
 
+    // Give 3 token (FTR) to the donator
+    token.transfer(msg.sender, 3000000000000000000);
+
     emit DonationForRestaurant(_restaurantId, msg.value, _restaurant.donationNeeded, now, msg.sender, _restaurant.owner);
   }
 
@@ -127,7 +130,9 @@ contract Restaurants is ERC721 {
     uint green = getRandomValue(254);
     uint blue = getRandomValue(255);
     nft[_tokenId] = NFT(_tokenId, _restaurant.name, red, green, blue, msg.value);
-
+    
+    // Give 3 token (FTR) to the donator
+    token.transfer(msg.sender, 3000000000000000000);
     // Give 1 token (FTR) to the referrer
     token.transfer(_referrer, 1000000000000000000);
 

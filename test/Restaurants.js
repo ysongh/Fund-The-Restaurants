@@ -193,6 +193,11 @@ contract('Restaurants', ([deployer, account1, account2, account3]) => {
             assert.equal(result.amount, tokensToWei('1'), 'Amount is correct');
             assert.isAtMost(result.red.toNumber(), 255, 'Value must not be greater than 255');
         })
+
+        it('gave 3 FTR to the donator', async () => {
+            let balance = await token.balanceOf(account3);
+            assert.equal(balance.toString(), tokensToWei('3'));
+        })
     });
 
     describe('donate to restaurant with referrer', async() => {
@@ -249,9 +254,14 @@ contract('Restaurants', ([deployer, account1, account2, account3]) => {
             assert.isAtMost(result.red.toNumber(), 255, 'Value must not be greater than 255');
         })
 
+        it('gave 3 FTR to the donator', async () => {
+            let balance = await token.balanceOf(account2);
+            assert.equal(balance.toString(), tokensToWei('3'));
+        })
+
         it('gave 1 token to the referrer', async () => {
             let balance = await token.balanceOf(account3);
-            assert.equal(balance.toString(), tokensToWei('1'));
+            assert.equal(balance.toString(), tokensToWei('4'));
         })
     });
 
@@ -276,7 +286,7 @@ contract('Restaurants', ([deployer, account1, account2, account3]) => {
             assert.notEqual(oldNFT.blue.toString(), newNFT.blue.toString(), 'Blue value has changed');
 
             // reject if the user does not have any FTR tokens
-            await restaurants.changeColorOfNFT(1, { from: account2 }).should.be.rejected;
+            await restaurants.changeColorOfNFT(1, { from: account1 }).should.be.rejected;
 
             // reject if the token id is invalid
             await restaurants.changeColorOfNFT(10, { from: account3 }).should.be.rejected;
@@ -284,7 +294,7 @@ contract('Restaurants', ([deployer, account1, account2, account3]) => {
 
         it('user pay 1 FTR', async () => {
             let balance = await token.balanceOf(account3);
-            assert.equal(balance.toString(), 0);
+            assert.equal(balance.toString(), tokensToWei('3'));
         })
     });
 })
