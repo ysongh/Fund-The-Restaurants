@@ -71,7 +71,7 @@ function DonationModal({ getDonationLog, donateRestaurant, donateRestaurantWithR
                 </div>
               ) : (
                 <>
-                  <h2 className="text-center mb-3">You Earn NFT!</h2>
+                  <h2 className="h4 text-center mb-3">You Earn NFT and 3 FTR Tokens!</h2>
                   <div className="card" style={{ background: `rgb(${nft.red}, ${nft.green}, ${nft.blue})`}}>
                     <div className="card-body px-4">
                       
