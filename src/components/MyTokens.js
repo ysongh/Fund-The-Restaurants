@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
+import Identicon from 'identicon.js';
 
 import { GlobalContext } from '../context/GlobalState';
 
@@ -22,7 +23,16 @@ function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork }){
 
   return(
     <div className="container" style={{minHeight: '65vh'}}>
-      <h1 className="my-3">My Tokens</h1>
+      <div className="d-flex align-items-center">
+        <h1 className="my-3">My Tokens</h1>
+        <img
+          className="ml-2"
+          width='35'
+          height='35'
+          src={`data:image/png;base64,${new Identicon(walletAddress, 30).toString()}`}
+          alt="Icon" />
+      </div>
+      
       <p>{tokenAmount} FTR</p>
 
       <div className="row">

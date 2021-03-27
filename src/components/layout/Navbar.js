@@ -1,6 +1,5 @@
 import React, {useContext} from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import Identicon from 'identicon.js';
 
 import { GlobalContext } from '../../context/GlobalState';
 
@@ -41,7 +40,8 @@ function Navbar({ loading, currentNetwork, portis, reset }){
             }
           </ul>
           <ul className="navbar-nav">
-            <li className="nav-item d-flex" data-toggle="collapse" data-target=".navbar-collapse.show">
+            <li className="nav-item d-flex align-items-center" data-toggle="collapse" data-target=".navbar-collapse.show">
+              {walletAddress && <span className="badge badge-warning">{currentNetwork === 'MATIC' ? 'Matic' : 'Kovan'} TestNet</span>}
               {walletAddress ? <a
                 target="_blank"
                 className="nav-link text-primary-color"
@@ -49,14 +49,6 @@ function Navbar({ loading, currentNetwork, portis, reset }){
                 href={currentNetwork === 'MATIC' ? "https://explorer-mumbai.maticvigil.com/address/" + walletAddress : "https://kovan.etherscan.io/address/" + walletAddress}>
                 {walletAddress.substring(0,5)}...{walletAddress.substring(37,42)}
               </a> : <button className="btn secondary-bg-color" data-toggle="modal" data-target="#walletModal" disabled={loading}>Open Wallet</button>
-              }
-              {walletAddress && 
-                <img
-                  className="mt-1 mr-2"
-                  width='35'
-                  height='35'
-                  src={`data:image/png;base64,${new Identicon(walletAddress, 30).toString()}`}
-                  alt="Icon" />
               }
             </li>
             {walletAddress && 
