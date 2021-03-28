@@ -33,7 +33,7 @@ function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork }){
           alt="Icon" />
       </div>
       
-      <p>You have {tokenAmount} FTR - You can pay 1 FTR to change the color of your NFTs</p>
+      <p className="mb-4">You have {tokenAmount} FTR - You can pay 1 FTR to change the color of your NFTs</p>
 
       <div className="row">
         {tokens.map(token => {

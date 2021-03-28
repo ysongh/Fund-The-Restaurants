@@ -66,77 +66,85 @@ function AddRestaurant({ createRestaurant, getPrice, currentNetwork }){
   return(
     <div className="addRestaurant container">
       <div className="row">
-        <div className="col-12 col-md-6 col-lg-5 m-auto">
+        <div className="col-12 col-md-9 col-lg-8 m-auto">
           
           <div className="card mt-4">
             <div className="card-body">
               <img className="icon" src="/images/icon1.png" alt="Icon" />
               <h1 className="text-center mb-4">Add Restaurant</h1>
 
-              <div className="form-group">
-                <label>Name of the Restaurant *</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)} 
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Location *</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  name="Location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)} 
-                />
-              </div>
-              <div className="form-group">
-                <label>Image of your restarurant</label>
-                <div className="input-group">
-                  <div className="custom-file">
-                    <input type="file" className="custom-file-input" onChange={getFile} />
-                    <label className="custom-file-label">{filename ? filename : "Choose file"}</label>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label>Amount *</label>
-                <div className="d-flex align-items-center">
-                  <div className="input-group mb-3 w-50">
+              <div className="row">
+                <div className="col-12 col-md-6">
+                  <div className="form-group">
+                    <label className="font-weight-bold">Name of the Restaurant *</label>
                     <input
-                      className="form-control "
-                      type="number"
-                      name="amount"
-                      value={amount}
-                      onChange={(e) => handleAmount(e)} 
+                      className="form-control"
+                      type="text"
+                      name="Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)} 
                     />
-                    <div className="input-group-append">
-                      <span className="input-group-text">{currentNetwork}</span>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="font-weight-bold">Location *</label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name="Location"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)} 
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="font-weight-bold">Amount *</label>
+                    <div className="d-flex align-items-center">
+                      <div className="input-group mb-3 w-50">
+                        <input
+                          className="form-control "
+                          type="number"
+                          name="amount"
+                          value={amount}
+                          onChange={(e) => handleAmount(e)} 
+                        />
+                        <div className="input-group-append">
+                          <span className="input-group-text">{currentNetwork}</span>
+                        </div>
+                      </div>
+                      <p className="addRestaurant__price w-50 text-right">${price}</p>
                     </div>
                   </div>
-                  <p className="addRestaurant__price w-50 text-right">${price}</p>
                 </div>
-              </div>
 
-              <div className="form-group">
-                <label>Description *</label>
-                <textarea
-                  className="form-control"
-                  type="text"
-                  name="description"
-                  rows="5"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}  />
+                <div className="col-12 col-md-6">
+                  <div className="form-group">
+                    <label className="font-weight-bold">Image of your restarurant (optional)</label>
+                    <div className="input-group">
+                      <div className="custom-file">
+                        <input type="file" className="custom-file-input" onChange={getFile} />
+                        <label className="custom-file-label">{filename ? filename : "Choose file"}</label>
+                      </div>
+                    </div>
+                    <p className="text-muted">* Image you upload cannot be removed</p>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="font-weight-bold">Description *</label>
+                    <textarea
+                      className="form-control"
+                      type="text"
+                      name="description"
+                      rows="5"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}  />
+                  </div>
+                </div>
               </div>
 
               {!loading ? (
                 <button
-                  className="btn primary-bg-color btn-block"
+                  className="btn primary-bg-color btn-lg w-25 float-right"
                   onClick={addRestaurant}
                   disabled={!name || !location || !amount || !description}>
                   Create
