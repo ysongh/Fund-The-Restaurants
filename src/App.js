@@ -6,6 +6,7 @@ import Web3 from 'web3';
 import { portisId } from './config';
 import { GlobalProvider } from './context/GlobalState';
 import './App.css';
+import Alert from './components/common/Alert';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import RestaurantsBlockchain from './abis/Restaurants.json';
@@ -27,7 +28,7 @@ class App extends Component{
     donationList: [],
     tokens: [],
     ethPrice: 0,
-    currentNetwork: "ETH",
+    currentNetwork: "MATIC",
     portis: null,
     loading: false
   }
@@ -239,11 +240,7 @@ class App extends Component{
             currentNetwork={this.state.currentNetwork}
             portis={this.state.portis}
             reset={this.reset.bind(this)} />
-          <div className="alert alert-info" role="alert">
-            <p className="text-center m-0">
-              Contract currently works on the Kovan and Matic Mumbai Test Network
-            </p>
-          </div>
+          <Alert />
           <Switch>
             <Route path="/mytokens">
               <MyTokens

@@ -31,8 +31,8 @@ function WalletModal({ connectToBlockchain, changeNetwork, setLoading }){
                   <label className="input-group-text">Choose Network</label>
                 </div>
                 <select className="custom-select" onChange={(e) => changeNetwork(e.target.value)}>
-                  <option value="ETH" defaultValue>Kovan Test Network</option>
-                  <option value="MATIC">Matic Mumbai Test Network</option>
+                  <option value="MATIC" defaultValue>Matic Mumbai Test Network</option>
+                  <option value="ETH">Kovan Test Network</option>
                 </select>
               </div>
 

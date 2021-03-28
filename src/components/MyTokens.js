@@ -61,7 +61,7 @@ function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork }){
           )
         })}
       </div>
-      {!tokens.length && <p>You do not have any NFTs.  You can earn some NFTs by donating some crypto to restaurants.</p>}
+      {!tokens.length && <p className="text-danger lead text-center mt-5">You do not have any NFTs.  You can earn some NFTs by donating some crypto to restaurants.</p>}
     </div>
   )
 }
