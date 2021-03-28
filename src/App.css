@@ -27,9 +27,18 @@
 
 .img-rounded {
     width: 100%;
-    border-radius: 50%;
 }
 
 .addRestaurant__price {
     font-size: 1.4rem;
 }
+
+.token__label {
+    position: absolute;
+    right: -15px;
+    top: 5px;
+    width: 70px;
+    transform: rotate(45deg);
+}
+
+.relative { position: relative; }
