@@ -4,7 +4,7 @@ A dapp that allows customers to donate funds to restaurants and earn NFT
 - Live Site - https://fund-the-restaurants.web.app/
 - Demo - https://youtu.be/Cj3Wk7cqk4Q
 
-## Polygon (Matic Mumbai Testnet) Testnet
+## Polygon (Matic Mumbai) Testnet
 - Restaurants Contract Address: [0x4557280882E06721F14429Dc7047BFC3EF92aB11](https://explorer-mumbai.maticvigil.com/address/0x4557280882E06721F14429Dc7047BFC3EF92aB11/transactions)
 - Token Contract Address: [0x64fb7e35cA6eB4AD8410b575B165Ea7F2Ad8642c](https://explorer-mumbai.maticvigil.com/address/0x64fb7e35cA6eB4AD8410b575B165Ea7F2Ad8642c/transactions)
 
@@ -24,6 +24,7 @@ A dapp that allows customers to donate funds to restaurants and earn NFT
 - Openzeppelin/contracts ERC721.sol and ERC20.sol
 - IPFS
 - Chainlink Price Feeds
+- Portis (Alternative Wallet Provider)
 
 ## Running the dapp on local host
 - Clone or download this repository
