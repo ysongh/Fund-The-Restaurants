@@ -30,5 +30,6 @@ A dapp that allows customers to donate funds to restaurants and earn NFT
 - Create a file called 'config.js' on the src folder and add the following code
 ```
 export const portisId = 'Get Portis ID from Portis Dashboard';
+export const covalentAPIKey = "Get api key from Covalent";
 ```
 - Run `npm start` to start the dapp
