@@ -23,6 +23,7 @@ class App extends Component{
     restaurantCount: 0,
     totalSupply: 0,
     restaurantsBlockchain: null,
+    restaurantsBlockchainAddress: "",
     tokenBlockchain: null,
     restaurants: [],
     donationList: [],
@@ -75,6 +76,7 @@ class App extends Component{
     if(networkData){
       const abi = RestaurantsBlockchain.abi;
       const address = RestaurantsBlockchain.networks[networkId].address;
+      this.setState({ restaurantsBlockchainAddress: address });
 
       const restaurantsBlockchain = new web3.eth.Contract(abi, address);
       this.setState({ restaurantsBlockchain });
@@ -247,7 +249,8 @@ class App extends Component{
                 changeColor={this.changeColor.bind(this)}
                 tokenBlockchain={this.state.tokenBlockchain}
                 tokens={this.state.tokens}
-                currentNetwork={this.state.currentNetwork} />
+                currentNetwork={this.state.currentNetwork}
+                restaurantsBlockchainAddress={this.state.restaurantsBlockchainAddress} />
             </Route>
             <Route path="/add-restaurant">
               <AddRestaurant

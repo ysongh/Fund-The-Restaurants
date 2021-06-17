@@ -4,7 +4,7 @@ import Identicon from 'identicon.js';
 import { GlobalContext } from '../context/GlobalState';
 import { covalentAPIKey } from '../config';
 
-function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork }){
+function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork, restaurantsBlockchainAddress }){
   const { walletAddress } = useContext(GlobalContext);
   const [tokenAmount, setTokenAmount] = useState(0);
   const [totalSupply, setTotalSupply] = useState(0);
@@ -16,7 +16,7 @@ function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork }){
     }
 
     async function getTokens() {
-      const res = await fetch(`https://api.covalenthq.com/v1/80001/tokens/0x965059d3F3929828ae351A04856a7F9AA26d20d7/token_holders/?key=${covalentAPIKey}`);
+      const res = await fetch(`https://api.covalenthq.com/v1/80001/tokens/${restaurantsBlockchainAddress}/token_holders/?key=${covalentAPIKey}`);
       const { data } = await res.json();
       console.log(data);
       setTotalSupply(data.items[0].balance);
