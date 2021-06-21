@@ -249,8 +249,7 @@ class App extends Component{
                 changeColor={this.changeColor.bind(this)}
                 tokenBlockchain={this.state.tokenBlockchain}
                 tokens={this.state.tokens}
-                currentNetwork={this.state.currentNetwork}
-                restaurantsBlockchainAddress={this.state.restaurantsBlockchainAddress} />
+                currentNetwork={this.state.currentNetwork} />
             </Route>
             <Route path="/add-restaurant">
               <AddRestaurant
@@ -284,7 +283,9 @@ class App extends Component{
               <Restaurants
                 loading={this.state.loading}
                 restaurants={this.state.restaurants}
-                ethPrice={this.state.ethPrice} />
+                ethPrice={this.state.ethPrice}
+                restaurantsBlockchainAddress={this.state.restaurantsBlockchainAddress}
+                currentNetwork={this.state.currentNetwork} />
             </Route>
           </Switch>
 

@@ -2,12 +2,10 @@ import React, { useEffect, useContext, useState } from 'react';
 import Identicon from 'identicon.js';
 
 import { GlobalContext } from '../context/GlobalState';
-import { covalentAPIKey } from '../config';
 
-function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork, restaurantsBlockchainAddress }){
+function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork }){
   const { walletAddress } = useContext(GlobalContext);
   const [tokenAmount, setTokenAmount] = useState(0);
-  const [totalSupply, setTotalSupply] = useState(0);
   
   useEffect(() => {
     async function getTokenAmount() {
@@ -15,16 +13,7 @@ function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork, restau
       setTokenAmount(+window.web3.utils.fromWei(tokens.toString(), 'Ether'));
     }
 
-    async function getTokens() {
-      const res = await fetch(`https://api.covalenthq.com/v1/80001/tokens/${restaurantsBlockchainAddress}/token_holders/?key=${covalentAPIKey}`);
-      const { data } = await res.json();
-      console.log(data);
-      setTotalSupply(data.items[0].balance);
-    }
-    
-
     getTokenAmount();
-    getTokens()
   }, [walletAddress])
 
   const handleClick = async tokenId => {
@@ -44,7 +33,6 @@ function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork, restau
           alt="Icon" />
       </div>
       
-      <p className="mb-2">{totalSupply} NFT has been minted</p>
       <p className="mb-4">You have {tokenAmount} FTR - You can pay 1 FTR to change the color of your NFTs</p>
 
       <div className="row">

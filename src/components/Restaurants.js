@@ -1,10 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; 
 
 import { GlobalContext } from '../context/GlobalState';
+import { covalentAPIKey } from '../config';
 
-function Restaurants({restaurants, ethPrice, loading }){
+function Restaurants({restaurants, ethPrice, loading, restaurantsBlockchainAddress, currentNetwork }){
   const { walletAddress } = useContext(GlobalContext);
+  const [totalSupply, setTotalSupply] = useState(0);
+
+  useEffect(() => {
+    async function getTokens() {
+      const res = await fetch(`https://api.covalenthq.com/v1/80001/tokens/${restaurantsBlockchainAddress}/token_holders/?key=${covalentAPIKey}`);
+      const { data } = await res.json();
+      console.log(data);
+      setTotalSupply(data.items[0].balance);
+    }
+
+    if(restaurantsBlockchainAddress) getTokens();
+  }, [restaurantsBlockchainAddress])
 
   const getUSDValue = restaurant => {
     const totalUSDValue = (ethPrice * +window.web3.utils.fromWei(restaurant.donationNeeded.toString(), 'Ether')) / 100000000;
@@ -13,8 +26,9 @@ function Restaurants({restaurants, ethPrice, loading }){
   return(
     <div className="container" style={{ minHeight: '65vh'}}>
       <div className="jumbotron my-3">
-        <h1 className="">Support these restaurants</h1>
-        <p className="lead">You can help them by donating some crypto and earn NFT</p>
+        <h1>Support these restaurants</h1>
+        <p className="lead mb-1">You can help them by donating some crypto and earn NFT</p>
+        {restaurantsBlockchainAddress && <p className="text-muted">{totalSupply} NFTs has been minted on {currentNetwork} network</p>}
         <hr className="my-4"></hr>
         <p>If you are an restaurant owner that need funds, you can fill out the form to create a post</p>
         {walletAddress ? <p className="lead">
