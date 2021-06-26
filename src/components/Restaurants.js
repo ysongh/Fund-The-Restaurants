@@ -10,10 +10,14 @@ function Restaurants({restaurants, ethPrice, loading, restaurantsBlockchainAddre
 
   useEffect(() => {
     async function getTokens() {
-      const res = await fetch(`https://api.covalenthq.com/v1/80001/tokens/${restaurantsBlockchainAddress}/token_holders/?key=${covalentAPIKey}`);
+      let networkId;
+      if(currentNetwork === 'MATIC') networkId = 80001;
+      else networkId = 42;
+
+      const res = await fetch(`https://api.covalenthq.com/v1/${networkId}/tokens/${restaurantsBlockchainAddress}/token_holders/?key=${covalentAPIKey}`);
       const { data } = await res.json();
       console.log(data);
-      setTotalSupply(data.items[0].balance);
+      setTotalSupply(data.items[0]?.balance || 0);
     }
 
     if(restaurantsBlockchainAddress) getTokens();
