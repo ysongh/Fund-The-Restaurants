@@ -12,9 +12,14 @@ contract Restaurants is ERC721 {
   Token private token;
 
   /**
-   * Network: Kovan
+   * Network: Kovan Testnet
    * Aggregator: ETH/USD
    * Address: 0x9326BFA02ADD2366b30bacB125260Af641031331
+   */
+  /**
+   * Network: Rinkeby Testnet
+   * Aggregator: ETH/USD
+   * Address: 0x8A753747A1Fa494EC906cE90E9f37563A8AF630e
    */
   /**
    * Network: Mumbai Testnet
@@ -23,7 +28,7 @@ contract Restaurants is ERC721 {
    */
   constructor(Token _token) ERC721("FundRestaurantsToken", "FRT") public {
     token = _token;
-    priceFeed = AggregatorV3Interface(0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada);
+    priceFeed = AggregatorV3Interface(0x9326BFA02ADD2366b30bacB125260Af641031331);
   }
 
   struct Restaurant {
