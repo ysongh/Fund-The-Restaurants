@@ -6,11 +6,16 @@ function WalletModal({ connectToBlockchain, changeNetwork, setLoading }){
   const { setWalletAddress } = useContext(GlobalContext);
   
   const handleConnect = async walletType => {
-    setLoading();
-    await connectToBlockchain(walletType);
-    const accounts = await window.web3.eth.getAccounts();
-    setWalletAddress(accounts[0]);
-    setLoading();
+    try{
+      setLoading();
+      await connectToBlockchain(walletType);
+      const accounts = await window.web3.eth.getAccounts();
+      setWalletAddress(accounts[0]);
+      setLoading();
+    } catch (err) {
+      console.error(err);
+      setLoading();
+    } 
   }
 
   return(
