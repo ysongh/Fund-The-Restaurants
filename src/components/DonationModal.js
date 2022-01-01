@@ -86,17 +86,18 @@ function DonationModal({ getDonationLog, donateRestaurant, donateRestaurantWithR
             <div className="modal-footer">
               { !showAward ? (
                 <>
-                  <button type="button" className="btn btn-light" data-dismiss="modal">Cancel</button>
                   {!loading ? (
-                    <button
-                      className="btn primary-bg-color"
-                      onClick={donate}>
-                        Send
-                    </button>
+                    <>
+                      <button type="button" className="btn btn-light" data-dismiss="modal">Cancel</button>
+                      <button
+                        className="btn primary-bg-color"
+                        onClick={donate}>
+                          Send
+                      </button>
+                    </>
                   ) : (
                     <Spinner />
                   ) }
-                  
                 </>
                 ) : (
                   <button type="button" className="btn btn-light" data-dismiss="modal">Close</button>
