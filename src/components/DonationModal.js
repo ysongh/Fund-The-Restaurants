@@ -1,14 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Confetti from 'react-confetti'
 
 import Spinner from './common/Spinner';
 
-function DonationModal({ getDonationLog, donateRestaurant, donateRestaurantWithReferrer, id, imageURL, restaurantName, referrerAddress, getPrice, currentNetwork }){
+function DonationModal({ getDonationLog, donateRestaurant, donateRestaurantWithReferrer, id, imageURL, restaurantName, referrerAddress, getPrice, currentNetwork, walletAddress }){
   const [amount, setAmount] = useState('');
   const [showAward, setShowAward] = useState(false);
   const [nft, setNFT] = useState({});
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState(0);
+  const [balance, setBalance] = useState(0);
+
+  useEffect(() => {
+    getBalance();
+  }, [])
+
+  async function getBalance(){
+    try{
+      const _balance = await window.web3.eth.getBalance(walletAddress);
+      setBalance(_balance);
+    }
+    catch(err){
+      console.error(err);
+    }
+  }
   
   async function donate(){
     try{
@@ -53,7 +68,9 @@ function DonationModal({ getDonationLog, donateRestaurant, donateRestaurantWithR
 
             <div className="modal-body">
               { !showAward ? (
-                <div className="form-group mt-3 mb-4">
+                <div className="form-group my-1">
+                  <span className="badge badge-primary">Your Balance</span>
+                  <p className="lead">{balance / 10 ** 18} {currentNetwork}</p>
                   <label className="text-muted font-weight-bold" htmlFor="text">Amount</label>
                   <div class="input-group mb-3">
                     <input

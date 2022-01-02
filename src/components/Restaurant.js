@@ -116,7 +116,8 @@ function Restaurant({ account, getDonationLog, donateRestaurant, restaurants, do
         restaurantName={restaurants[id - 1]?.name}
         referrerAddress={referrerAddress}
         getPrice={getPrice}
-        currentNetwork={currentNetwork} />
+        currentNetwork={currentNetwork}
+        walletAddress={walletAddress} />
     </div>
   )
 }
