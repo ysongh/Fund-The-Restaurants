@@ -2,10 +2,12 @@ import React, { useEffect, useContext, useState } from 'react';
 import Identicon from 'identicon.js';
 
 import { GlobalContext } from '../context/GlobalState';
+import Spinner from './common/Spinner';
 
 function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork }){
   const { walletAddress } = useContext(GlobalContext);
   const [tokenAmount, setTokenAmount] = useState(0);
+  const [loading, setLoading] = useState(false);
   
   useEffect(() => {
     async function getTokenAmount() {
@@ -17,8 +19,16 @@ function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork }){
   }, [walletAddress])
 
   const handleClick = async tokenId => {
-    await changeColor(tokenId);
-    setTokenAmount(tokenAmount - 1);
+    try{
+      setLoading(true);
+      await changeColor(tokenId);
+      setTokenAmount(tokenAmount - 1);
+      setLoading(false);
+    }
+    catch(err){
+      console.error(err);
+      setLoading(false);
+    }
   }
 
   return(
@@ -55,7 +65,7 @@ function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork }){
               </div>
 
               <center>
-                <button className="btn primary-bg-color btn-sm" onClick={() => handleClick(token.id)}>Change Color</button>
+                {loading ? <Spinner /> : <button className="btn primary-bg-color btn-sm" onClick={() => handleClick(token.id)}>Change Color</button>}
               </center>
             </div>
           )
