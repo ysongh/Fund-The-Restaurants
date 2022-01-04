@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import Identicon from 'identicon.js';
+import Moralis from 'moralis';
 
 import { GlobalContext } from '../context/GlobalState';
 import Spinner from './common/Spinner';
@@ -15,7 +16,15 @@ function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork }){
       setTokenAmount(+window.web3.utils.fromWei(tokens.toString(), 'Ether'));
     }
 
-    getTokenAmount();
+    async function getNFTs() {
+      const options = { chain: 'kovan', address: walletAddress };
+      const nfts = await Moralis.Web3API.account.getNFTs(options);
+
+      console.log(nfts)
+    }
+
+    if(walletAddress) getTokenAmount();
+    if(walletAddress) getNFTs();
   }, [walletAddress])
 
   const handleClick = async tokenId => {
@@ -35,12 +44,12 @@ function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork }){
     <div className="container" style={{minHeight: '65vh'}}>
       <div className="d-flex align-items-center">
         <h1 className="my-3">My Tokens</h1>
-        <img
+        {walletAddress && <img
           className="ml-2"
           width='35'
           height='35'
           src={`data:image/png;base64,${new Identicon(walletAddress, 30).toString()}`}
-          alt="Icon" />
+          alt="Icon" />}
       </div>
       
       <p className="mb-4">You have {tokenAmount} FTR - You can pay 1 FTR to change the color of your NFTs</p>

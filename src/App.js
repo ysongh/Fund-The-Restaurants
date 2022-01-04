@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { HashRouter as Router, Switch, Route  } from 'react-router-dom';
 import Portis from '@portis/web3';
 import Web3 from 'web3';
+import Moralis from 'moralis';
 
 import { portisId } from './config';
 import { GlobalProvider } from './context/GlobalState';
@@ -16,6 +17,10 @@ import Restaurant from './components/Restaurant';
 import AddRestaurant from './components/AddRestaurant';
 import MyTokens from './components/MyTokens';
 import WalletModal from './components/WalletModal';
+
+const serverUrl = "https://iuuvbn9vmnqk.usemoralis.com:2053/server";
+const appId = "cPyjX9vsGPCsXdbnVCBxekHBY1TMJhk880oSlZei";
+Moralis.start({ serverUrl, appId });
 
 class App extends Component{
   state = {

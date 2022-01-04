@@ -12,6 +12,7 @@
     "ipfs-http-client": "^33.1.1",
     "jquery": "^3.5.1",
     "moment": "^2.29.1",
+    "moralis": "0.0.181",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-confetti": "^6.0.0",
