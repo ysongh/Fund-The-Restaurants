@@ -1,6 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
 import Identicon from 'identicon.js';
-import Moralis from 'moralis';
 
 import { GlobalContext } from '../context/GlobalState';
 import Spinner from './common/Spinner';
@@ -16,15 +15,7 @@ function MyTokens({ changeColor, tokenBlockchain, tokens, currentNetwork }){
       setTokenAmount(+window.web3.utils.fromWei(tokens.toString(), 'Ether'));
     }
 
-    async function getNFTs() {
-      const options = { chain: 'kovan', address: walletAddress };
-      const nfts = await Moralis.Web3API.account.getNFTs(options);
-
-      console.log(nfts)
-    }
-
     if(walletAddress) getTokenAmount();
-    if(walletAddress) getNFTs();
   }, [walletAddress])
 
   const handleClick = async tokenId => {

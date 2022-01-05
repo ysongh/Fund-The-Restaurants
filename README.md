@@ -21,6 +21,7 @@ A dapp that allows customers to donate funds to restaurants and earn NFT
 - IPFS
 - Chainlink Price Feeds
 - Portis (Alternative Wallet Provider)
+- Moralis SDK
 
 ## Running the dapp on local host
 - Clone or download this repository
