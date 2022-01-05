@@ -1,27 +1,37 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; 
+import Moralis from 'moralis';
 
+import RestaurantsBlockchain from '../abis/Restaurants.json';
 import { GlobalContext } from '../context/GlobalState';
-import { covalentAPIKey } from '../config';
 
 function Restaurants({restaurants, ethPrice, loading, restaurantsBlockchainAddress, currentNetwork }){
   const { walletAddress } = useContext(GlobalContext);
+
   const [totalSupply, setTotalSupply] = useState(0);
 
   useEffect(() => {
-    async function getTokens() {
-      let networkId;
-      if(currentNetwork === 'MATIC') networkId = 80001;
-      else networkId = 42;
+    getNFTsData(currentNetwork);
+  }, [currentNetwork])
 
-      const res = await fetch(`https://api.covalenthq.com/v1/${networkId}/tokens/${restaurantsBlockchainAddress}/token_holders/?key=${covalentAPIKey}`);
-      const { data } = await res.json();
-      console.log(data);
-      setTotalSupply(data.items[0]?.balance || 0);
+  async function getNFTsData(currentNetwork) {
+    let networkId, networkType;
+
+    if(currentNetwork === 'MATIC'){
+      networkType = "mumbai";
+      networkId = 80001;
+    }
+    else{
+      networkId = 42;
+      networkType = "kovan";
     }
 
-    if(restaurantsBlockchainAddress) getTokens();
-  }, [restaurantsBlockchainAddress])
+    const options = { chain: networkType, address: RestaurantsBlockchain.networks[networkId].address };
+    const tokenMetadata = await Moralis.Web3API.token.getNFTOwners(options);
+    console.log(tokenMetadata);
+
+    setTotalSupply(tokenMetadata.result.length);
+  }
 
   const getUSDValue = restaurant => {
     const totalUSDValue = (ethPrice * +window.web3.utils.fromWei(restaurant.donationNeeded.toString(), 'Ether')) / 100000000;
